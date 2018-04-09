@@ -129,19 +129,311 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-编写高质量iOS与OS-X代码的52个有效方法-第一章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-第二章-对象、消息、运行时" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/编写高质量iOS与OS-X代码的52个有效方法-第一章/">编写高质量iOS与OS X代码的52个有效方法 - 第一章</a>
+      <a class="article-title" href="/2018/04/09/第二章-对象、消息、运行时/">第二章 - 对象、消息、运行时</a>
     </h1>
   
 
         
-        <a href="/2018/04/09/编写高质量iOS与OS-X代码的52个有效方法-第一章/" class="archive-article-date">
+        <a href="/2018/04/09/第二章-对象、消息、运行时/" class="archive-article-date">
+  	<time datetime="2018-04-09T05:50:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第六条：理解“属性”这一概念"><a href="#第六条：理解“属性”这一概念" class="headerlink" title="第六条：理解“属性”这一概念"></a>第六条：理解“属性”这一概念</h2><ul>
+<li>@property会自动生成set、get方法，和带下划线的实例变量，可使用@synthesize语法来指定实例变量名字，不过不推荐指定</li>
+<li>内存管理语义，下面这一组特质仅会影响设置方法：</li>
+<li>assign : “设置方法”只会执行针对”纯量类型”的简单赋值操作，如:CGFloat、NSInteger等</li>
+<li>strong : 定义了一种”拥有关系”，为这种属性设置新值时，设置方法会先保留新值，并释放旧值，然后再将新值设置上去</li>
+<li>weak : 定义了一种”非拥有关系”，为这种属性设置新值时，设置方法既不保留新值，也不释放旧值，此特质同assign相似，然而当属性所指对象销毁时，属性值会自动清空</li>
+<li>unsafe_unretained : 与assign相同，但它适用于”对象类型”，该特质定义了”非拥有关系”，当目标对象被销毁时，属性值不会清空，可能会导致野指针</li>
+<li>copy : 此特质表达所属关系与strong相似，然而设置方法并不保留新值，而是将其拷贝，适用NSString、NSArray等有可变类型的关键字</li>
+</ul>
+<pre><code>
+NSNumber * number = [NSNumber numberWithInt:1];
+</code></pre>
+
+<font size="3" color="red">要点:</font>
+
+<ul>
+<li>如果说确定是不可变类型给不可变类型赋值时，可以使用strong修饰NSString，因为用copy修饰时，set方法内部实现为</li>
+</ul>
+<pre><code>
+_name = [name copy]; 
+</code></pre>
+
+<ul>
+<li>调用copy方法系统底层会做很多处理，如判断是否需要分配新内存等</li>
+<li>一定不要用copy修饰可变类型，如NSMutableArray等，因为被copy修饰生成的是不可变类型，当调用可变方法时会崩溃</li>
+</ul>
+<h2 id="第七条：在对象内部尽量直接访问实例变量"><a href="#第七条：在对象内部尽量直接访问实例变量" class="headerlink" title="第七条：在对象内部尽量直接访问实例变量"></a>第七条：在对象内部尽量直接访问实例变量</h2><p>直接访问实例变量和使用self.调用属性的区别:</p>
+<ul>
+<li>由于不经过Objective-C的”方法派发”，所以直接访问实例变量速度更快，编译器所生成的代码会直接访问保存对象实例变量的那块内存</li>
+<li>直接访问实例变量时，不会调用其”设置方法”，会绕过”内存管理语义”(见第六条)，如在ARC下直接访问声明为copy的属性，并不会copy该属性，只会保留新值并释放旧值</li>
+<li>如果直接访问实例变量，不会触发”KVO”</li>
+<li>通过属性访问有助于排查错误，因为可以给”设置方法”打断点</li>
+</ul>
+<p>综上所述，折中的方案就是在写入实例变量时，通过其”设置方法”来做，在读取实例变量时，则直接访问。这样的话既能提高读取操作速度，又能控制对属性的写入操作，还能贯彻落实”内存管理语义”。但是需要<font color="red">注意</font>，在使用懒加载技术时，如果没调用”获取方法”而直接访问实例变量时会有问题。</p>
+<font size="3" color="red">总结:</font>
+
+<ul>
+<li>在对象内部读取数据时，应通过实例变量读取(懒加载除外)，而写入数据时则通过属性写入</li>
+<li>在初始化方法及dealloc方法中，为了避免子类复写了setter方法造成的异常，总应访问实例变量来读写数据</li>
+</ul>
+<h2 id="第八条：理解”对象等同性”"><a href="#第八条：理解”对象等同性”" class="headerlink" title="第八条：理解”对象等同性”"></a>第八条：理解”对象等同性”</h2><pre><code>
+NSString *foo = @"Badger 123";
+NSString *bar = [NSString stringWithFormat:@"Badger %i", 123];
+NSLog(@"%d", foo == bar);                   //0
+NSLog(@"%d", [foo isEqual:bar]);            //1
+NSLog(@"%d", [foo isEqualToString:bar]);    //1
+</code></pre>
+
+<ul>
+<li>从结果看，按照 == 操作符比较出来的结果未必是我们想要的，因为该操作比较的是两个指针本身，而不是所指的对象</li>
+<li>NSString类实现了一个自己独有的等同性判断方法，名为”isEqualToString”，该方法比调用”isEqual”快，因为后者不知道受测对象类型</li>
+</ul>
+<font size="3" color="red">总结:</font>
+
+<ul>
+<li>如需深入了解以下内容可以复习下《Effective Objective-C 20 编写高质量iOS与OS X代码的52个有效方法》这本书</li>
+<li>若想监测对象的等同性，请提供”isEqual:”与”hash”方法</li>
+<li>相同的对象必须具有相同的哈希码，但是哈希码相同的对象却未必相同</li>
+<li>如果自定义比较方法的话不要盲目监测每条属性，而是按照需求指定监测方案</li>
+<li>编写”hash”方法时，应使用计算速度快且哈希码碰撞几率低的算法</li>
+</ul>
+<h2 id="第九条：以”类族模式”隐藏实现细节"><a href="#第九条：以”类族模式”隐藏实现细节" class="headerlink" title="第九条：以”类族模式”隐藏实现细节"></a>第九条：以”类族模式”隐藏实现细节</h2><p>首先来想一下以下代码BOOL值会为什么？</p>
+<pre><code>
+NSArray * array = @[@1,@2];
+BOOL b = [array class] == [NSArray class];
+</code></pre>
+
+<p>其实是false，因为NSArray是一个类族，返回的值绝不可能是NSArray类本身。所以需要判断某个实例所属的类是否在类族中应使用”isKindOfClass”方法。</p>
+<p>下面介绍类似UIButton的工厂方法的实现</p>
+<ul>
+<li>抽象基类.h文件，首先定义子类类型</li>
+</ul>
+<pre><code>
+typedef NS_ENUM(NSUInteger,SLEmploeeType){
+    SLEmploeeTypeDeveloper,
+    SLEmploeeTypeDesigner,
+    SLEmploeeTypeFinance,
+};
+</code></pre>
+
+<ul>
+<li>定义属性与方法接口</li>
+</ul>
+<pre><code>
+@interface SLEmploee : NSObject
+@property ( nonatomic , copy ) NSString * name;
++ (instancetype)emploeeWithType:(SLEmploeeType)type;
+- (void)doSomeWork;
+@end
+</code></pre>
+
+<ul>
+<li>抽象基类.m文件，自身不初始化，交由子类处理</li>
+</ul>
+<pre><code>
++ (instancetype)emploeeWithType:(SLEmploeeType)type
+{
+    switch (type) {
+        case SLEmploeeTypeDeveloper :
+            return [[SLEmploeeDeveloper alloc] init];
+            break;
+        case SLEmploeeTypeDesigner :
+            return [[SLEmploeeDesigner alloc] init];
+            break;
+        case SLEmploeeTypeFinance :
+            return [[SLEmploeeFinance alloc] init];
+            break;
+    }
+}
+-(void)doSomeWork{//子类实现}
+</code></pre>
+
+<ul>
+<li>此时外界调用，不同子类实现方式不同，而SLEmploee基类的doSomeWork并不做处理，所以也不应该让使用者直接用基类调用doSomeWork方法，最好在开发文档中写明</li>
+</ul>
+<pre><code>
+SLEmploee * one = [SLEmploee emploeeWithType:SLEmploeeTypeDesigner];
+[one doSomeWork];
+[one isMemberOfClass:[SLEmploee class]];  //NO，其实是子类的实例
+[one isKindOfClass:[SLEmploee class]];    //YES，实例位于类族中
+</code></pre>
+
+<font size="3" color="red">总结:</font>
+
+<ul>
+<li>类族模式可以把实现细节隐藏在一套简单的公共接口后面(系统框架中经常使用类族，如UIButton)</li>
+<li>从类族的公共抽象基类中继承子类时要当心，如有开发文档，则因先阅读开发文档</li>
+</ul>
+<h2 id="第十条：在既有类中使用关联对象存放自定义数据"><a href="#第十条：在既有类中使用关联对象存放自定义数据" class="headerlink" title="第十条：在既有类中使用关联对象存放自定义数据"></a>第十条：在既有类中使用关联对象存放自定义数据</h2><p>本条主要内容为”对象关联”，如需进阶请自行搜索</p>
+<ul>
+<li>设置关联objc_setAssociatedObject</li>
+<li>获取关联objc_getAssociatedObject</li>
+<li>可以通过”关联对象”机制来把两个对象链接起来</li>
+<li>定义关联对象时可指定”内存管理语义”，用以模仿定义属性时所采用的”拥有关系”和”非拥有关系”</li>
+<li>只有在其他做法不可行时才应选用”对相关联”，因为这种方法通常会引入难以查找的BUG</li>
+</ul>
+<h2 id="第十一条：理解objc-msgSend的作用"><a href="#第十一条：理解objc-msgSend的作用" class="headerlink" title="第十一条：理解objc_msgSend的作用"></a>第十一条：理解objc_msgSend的作用</h2><p>在对象上调用方法时Objective-C中的常用功能，用术语来说就叫做”消息传递”，消息有”名称”(name)或”选择器”(selector),可以接受参数，也有可能有返回值</p>
+<ul>
+<li>消息由接收者、选择器及参数构成，给某个对象”发送消息”(invoke a message)也饿就是相当于在该对象上”调用方法”(call a method)</li>
+<li>发送给某对象的全部消息都要由”动态消息派发系统”(dynamic message dispatch system)来处理，该系统工作原理为:</li>
+</ul>
+<pre><code>
+1.首先在接收者所属类中搜寻其"方法列表"(list of methods)，如果找到，跳转到实现代码，否则继续
+2.沿着继承体系继续向上查找，如果找到，跳转到实现代码，否则继续
+3.最终找不到相符方法的话，就执行"消息转发"(message forwarding)操作(第十二条)
+</code></pre>
+
+<ul>
+<li>看起来调用一个方法需要很多步骤，所幸的是objc_msgSend会将匹配结果缓存在”快速映射表”(fast map)中，每一个类都有这样一块缓存，若是稍后还向该类发送与选择器相同的消息，那么执行起来就会很快</li>
+</ul>
+<h2 id="第十一条：理解消息转发机制"><a href="#第十一条：理解消息转发机制" class="headerlink" title="第十一条：理解消息转发机制"></a>第十一条：理解消息转发机制</h2><p>如果对象收到无法解读的信息时，会调用所属类的下列类方法，此时可以进行动态方法解析</p>
+<ul>
+<li>首先调用下列方法，参数就是未知的选择器</li>
+</ul>
+<pre><code>
++ (BOOL)resolveInstanceMethod:(SEL)sel
+</code></pre>
+
+<ul>
+<li>假设尚未实现的方法不是实例方法而是类方法，那么运行期间会调用下列方法</li>
+</ul>
+<pre><code>
++(BOOL)resolveClassMethod:(SEL)sel
+</code></pre>
+
+<font size="3" color="red">要点:</font>
+
+<ul>
+<li>若对象无法响应某个选择器，则进入消息转发流程</li>
+<li>通过运行期的动态方法解析功能，我们就可以在需要用到某个方法时再将其加入类中</li>
+<li>对象可以把其无法解读的某些选择器转交给其他对象处理</li>
+<li>经过上述两步后，如果还没办法处理选择器，就启动完整的消息转发机制</li>
+<li><a href="https://www.jianshu.com/p/f9bd98ad5b05" target="_blank" rel="external">解读文章</a>(作者:SuperMario_Nil)</li>
+</ul>
+<h2 id="第十三条：用”方法交换”调试”黑盒方法”"><a href="#第十三条：用”方法交换”调试”黑盒方法”" class="headerlink" title="第十三条：用”方法交换”调试”黑盒方法”"></a>第十三条：用”方法交换”调试”黑盒方法”</h2><p>核心代码，通常实现在load方法中</p>
+<ul>
+<li>获取方法</li>
+</ul>
+<pre><code>
+Method imageNameMethod = class_getClassMethod([UIImage class], @selector(imageNamed:));
+Method my_imageNamedMethod = class_getClassMethod([UIImage class], @selector(my_imageNamed:));
+</code></pre>
+
+<ul>
+<li>交换方法</li>
+</ul>
+<pre><code>
+method_exchangeImplementations(imageNameMethod, my_imageNamedMethod);
+</code></pre>
+
+<ul>
+<li>在运行期间，可以向类中新增或替换选择器所对应的方法实现</li>
+<li>使用另一份实现来替换原有方法的实现称为”方法交换”，开发者常用此技术向原有功能中添加新功能</li>
+<li>使用”方法交换”可以给”完全不知道怎么实现的”的黑盒系统方法添加日志打印信息，有助于程序调试</li>
+<li>一般来说，只有调试程序时才需要在运行期修改方法实现，这种做法不宜滥用</li>
+</ul>
+<h2 id="第十四条：理解”类对象”的用意"><a href="#第十四条：理解”类对象”的用意" class="headerlink" title="第十四条：理解”类对象”的用意"></a>第十四条：理解”类对象”的用意</h2><pre><code>
+typedef struct objc_class * Class;
+struct objc_class {
+    Class isa;                // 当前类类型
+    Class super_class;        // 父类
+    const char *name;         // 类名
+    long version;             // 类的版本信息，默认为0
+    long info;                // 类信息，供运行期使用的一些位标识
+    long instance_size;       // 该类的实例变量大小
+    struct objc_ivar_list *ivars;               // 该类的成员变量链表
+    struct objc_method_list **methodLists;  // 方法定义的链表
+    struct objc_cache *cache;               // 方法缓存
+    struct objc_protocol_list *protocols;   // 协议链表
+#endif
+
+} OBJC2_UNAVAILABLE;
+</code></pre>
+
+<ul>
+<li>每个实例都有一个指向Class对象的指针(isa指针)，用以表明其类型，而这些Class对象则构成了类的集成体系</li>
+<li>如果对象类型无法再编译器确定，那么就应该使用类型信息查询方法来探知</li>
+<li>尽量使用类型信息查询方法确定对象类型，而不是直接比较对象，因为某些对象可能实现了消息转发功能</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/09/第二章-对象、消息、运行时/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-第一章-熟悉Objective-C" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/09/第一章-熟悉Objective-C/">第一章 - 熟悉Objective-C</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/09/第一章-熟悉Objective-C/" class="archive-article-date">
   	<time datetime="2018-04-09T03:40:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
 </a>
         
@@ -274,7 +566,7 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
         		</li>
       		
 		</ul>
@@ -284,7 +576,7 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/09/编写高质量iOS与OS-X代码的52个有效方法-第一章/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/04/09/第一章-熟悉Objective-C/">展开全文 >></a>
         </p>
       
 
@@ -552,92 +844,6 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
 
   
-    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-查看分支：git branch
-创建分支：git branch 'name'
-切换分支：git checkout 'name'
-创建+切换分支：git checkout -b 'name'
-合并某分支到当前分支：git merge 'name'
-普通方式合并：git merge --no-ff -m "merge with no-ff" dev
-删除分支：git branch -d 'name'
-查看分支合并：git log --graph --pretty=oneline --abbrev-commit
-存储当前工作分支：git stash
-查看存储工作分支：git stash list
-恢复工作分支：git stash apply  或者  git stash pop
-恢复指定工作分支：git stash apply stash@{0}
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -701,6 +907,92 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>
+查看分支：git branch
+创建分支：git branch 'name'
+切换分支：git checkout 'name'
+创建+切换分支：git checkout -b 'name'
+合并某分支到当前分支：git merge 'name'
+普通方式合并：git merge --no-ff -m "merge with no-ff" dev
+删除分支：git branch -d 'name'
+查看分支合并：git log --graph --pretty=oneline --abbrev-commit
+存储当前工作分支：git stash
+查看存储工作分支：git stash list
+恢复工作分支：git stash apply  或者  git stash pop
+恢复指定工作分支：git stash apply stash@{0}
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
         </p>
       
 
@@ -1068,11 +1360,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+                <a href="javascript:void(0)" class="js-tag color2">杂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1080,7 +1376,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">杂</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
             
             <div class="clearfix"></div>
