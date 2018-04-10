@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/4 | Hexo</title>
+  <title>第三章-接口与API设计 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2018/04/index.html">
+  <meta name="description" content="第十五条：用前缀避免命名空间冲突 选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀 若应用中引入的第三方库出现冲突时，可为其增加类前缀  第十六条：提供”指定初始化方法” 在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，">
+<meta name="keywords" content="编写高质量OC的52个有效方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章-接口与API设计">
+<meta property="og:url" content="http://yoursite.com/2018/04/10/第三章-接口与API设计/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第十五条：用前缀避免命名空间冲突 选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀 若应用中引入的第三方库出现冲突时，可为其增加类前缀  第十六条：提供”指定初始化方法” 在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，">
+<meta property="og:updated_time" content="2018-04-10T13:04:28.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="第三章-接口与API设计">
+<meta name="twitter:description" content="第十五条：用前缀避免命名空间冲突 选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀 若应用中引入的第三方库出现冲突时，可为其增加类前缀  第十六条：提供”指定初始化方法” 在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -127,36 +132,154 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-第三章-接口与API设计" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      第三章-接口与API设计
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/10/第三章-接口与API设计/" class="archive-article-date">
+
+        
+        <a href="/2018/04/10/第三章-接口与API设计/" class="archive-article-date">
   	<time datetime="2018-04-10T08:13:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-10</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/10/第三章-接口与API设计/">第三章-接口与API设计</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第十五条：用前缀避免命名空间冲突"><a href="#第十五条：用前缀避免命名空间冲突" class="headerlink" title="第十五条：用前缀避免命名空间冲突"></a>第十五条：用前缀避免命名空间冲突</h2><ul>
+<li>选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀</li>
+<li>若应用中引入的第三方库出现冲突时，可为其增加类前缀</li>
+</ul>
+<h2 id="第十六条：提供”指定初始化方法”"><a href="#第十六条：提供”指定初始化方法”" class="headerlink" title="第十六条：提供”指定初始化方法”"></a>第十六条：提供”指定初始化方法”</h2><ul>
+<li>在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，应复写超类初始化方法改为调用本类”指定初始化方法”，设置默认值或报异常(在OC中只有很严重的错误才应该报异常)</li>
+<li>如果遵循NSCoding协议，则可能出现不止一个”指定初始化方法”，也就是不止一次调用[super init];</li>
+</ul>
+<h2 id="第十七条：实现description方法"><a href="#第十七条：实现description方法" class="headerlink" title="第十七条：实现description方法"></a>第十七条：实现description方法</h2><p>在需要打印日志时，object对象会受到description消息，该方法返回的描述信息将取代打印中”格式字符串”里的”%@”，此方法是定义在NSObject协议里.</p>
+<ul>
+<li>我们可以这样实现它</li>
+</ul>
+<pre><code>
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ ",@{
+                                               @"once":self.once,
+                                               @"usernameKey":self.usernameKey,
+                                               @"passwordKey":self.passwordKey,
+                                               @"loginCodeKey":self.loginCodeKey,
+                                               @"loginCodeValue":self.loginCodeValue,
+                                               }];
+}
+</code></pre>
 
-        <div class="article-info info-on-right">
-          
+<p><font color="red">注意</font>:当只想使用LLDB控制台命令调试时(如:”po”命令)，我们应该复写debugDescription方法，该在NSObject类的默认实现中只是调用了description方法，但其只在LLDB调试时才调用。</p>
+<h2 id="第十八条：尽量使用不可变对象"><a href="#第十八条：尽量使用不可变对象" class="headerlink" title="第十八条：尽量使用不可变对象"></a>第十八条：尽量使用不可变对象</h2><ul>
+<li>尽量创建不可变对象</li>
+<li>若某属性仅可于对象内部修改，则在”class-continuation分类”中将其readonly属性拓展为readwrite属性</li>
+<li>不要在返回的对象上查询类型以确定其是否可变</li>
+</ul>
+<h2 id="第十九条：使用清晰而协调的命名方式"><a href="#第十九条：使用清晰而协调的命名方式" class="headerlink" title="第十九条：使用清晰而协调的命名方式"></a>第十九条：使用清晰而协调的命名方式</h2><p>命名时应遵循驼峰命名法，属性、方法首字母小写，类名除前缀首字母大写</p>
+<p>方法命名的注意事项：</p>
+<ul>
+<li>如果方法的返回值是新创建的，那么方法名的首个词应该是返回值的类型，除非前面还有修饰语(如localizedString)</li>
+<li>应该把表示参数类型的名词放在参数前面</li>
+<li>如果方法要在当前对象上执行操作，就应该包含动词;若执行操作时还需参数，则应在动词后加一个或多个名词</li>
+<li>不要用str这种简称，应该用string这种全称</li>
+<li>Boolean属性应加is前缀，如果某方法返回非属性的Boolean值，那么应该根据其功能，选用has或is当前前缀</li>
+<li>将get这个前缀留给那些借由”输出参数”来保存返回值的方法</li>
+</ul>
+<p>类与协议命名的注意事项：</p>
+<ul>
+<li>起名时应遵循标准Objective-C命名规范</li>
+<li>如果从其他框架继承子类，务必遵循其命名惯例，如:从UIView类中继承的话，类名结尾也应为View，同理，创建自定义委托时，其命名应包含委托发起方名称，后面再跟上Delegate一次</li>
+</ul>
+<h2 id="第二十条：为私有方法名加前缀"><a href="#第二十条：为私有方法名加前缀" class="headerlink" title="第二十条：为私有方法名加前缀"></a>第二十条：为私有方法名加前缀</h2><ul>
+<li>给私有方法的名称加上类前缀，这样可以很容易的将其与公共方法区分开，笔者推荐使用”p_”为私有方法前缀，也可使用类名前缀</li>
+<li>不要单独使用一个下划线做私有方法前缀，这种写法是预留给苹果公司的，你可能会无意中复写方法</li>
+</ul>
+<h2 id="第二十一条：理解Objective-C错误模型"><a href="#第二十一条：理解Objective-C错误模型" class="headerlink" title="第二十一条：理解Objective-C错误模型"></a>第二十一条：理解Objective-C错误模型</h2><ul>
+<li>只有发生了可使整个应用程序崩溃的严重错误时，才应使用异常</li>
+<li>在错误不那么严重的情况下，可以使用”委托方法”来处理错误，也可以把错误信息放在NSError对象中，经由”输出参数”返回给调用者</li>
+</ul>
+<h2 id="第二十二条：理解NSCopying协议"><a href="#第二十二条：理解NSCopying协议" class="headerlink" title="第二十二条：理解NSCopying协议"></a>第二十二条：理解NSCopying协议</h2><p>使用对象时经常需要拷贝它，若想让自己的类支持拷贝操作，就要实现NSCopying协议，该协议只有一个方法:</p>
+<pre><code>
+-(id)copyWithZone:(NSZone *)zone;
+</code></pre>
+
+<ul>
+<li>简单实现NSCopying协议，首先遵守协议</li>
+</ul>
+<pre><code>
+@interface Car : NSObject < NSCopying >
+@property int speed;
+@property int lzNum;
+@end
+</code></pre>
+
+<ul>
+<li>实现copyWithZone方法</li>
+</ul>
+<pre><code>
+- (id)copyWithZone:(NSZone *)zone{
+    Car *c1 = [Car new];
+    c1.speed = _speed;
+    c1.lzNum = _lzNum; 
+    return c1;
+}
+</code></pre>
+
+<p>深浅拷贝问题：</p>
+<ul>
+<li>浅拷贝之后的内容与原始内容均指向相同对象.</li>
+<li>深拷贝之后的内容所指向的对象时原始内容中相关对象的一份拷贝</li>
+<li>在绝大多数情况下，执行的都是浅拷贝，如果需要在某对象上执行深拷贝，那么除非该类文档说它是用深拷贝来实现NSCoping协议的，某则，要么寻找能够执行深拷贝的方法，要么自己编写方法来做</li>
+</ul>
+<p><font color="red">总结</font>:</p>
+<ul>
+<li>若想要自己所写对象具有拷贝功能，则需实现NSCopying协议</li>
+<li>如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopying与NSmutableCopying协议</li>
+<li>复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应尽量执行浅拷贝</li>
+<li>如果你所写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>感激不尽<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://github.com/sunleiSuper/sunleiSuper.github.io/blob/master/img/weixin.jpg?raw=true">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -168,95 +291,104 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/04/10/第三章-接口与API设计/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/09/第二章-对象、消息、运行时/" class="archive-article-date">
-  	<time datetime="2018-04-09T05:50:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/09/第二章-对象、消息、运行时/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第二章 - 对象、消息、运行时</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/09/第二章-对象、消息、运行时/">第二章 - 对象、消息、运行时</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/09/第一章-熟悉Objective-C/" class="archive-article-date">
-  	<time datetime="2018-04-09T03:40:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/09/第一章-熟悉Objective-C/">第一章 - 熟悉Objective-C</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -279,8 +411,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

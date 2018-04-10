@@ -129,6 +129,173 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-第三章-接口与API设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/10/第三章-接口与API设计/">第三章-接口与API设计</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/10/第三章-接口与API设计/" class="archive-article-date">
+  	<time datetime="2018-04-10T08:13:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第十五条：用前缀避免命名空间冲突"><a href="#第十五条：用前缀避免命名空间冲突" class="headerlink" title="第十五条：用前缀避免命名空间冲突"></a>第十五条：用前缀避免命名空间冲突</h2><ul>
+<li>选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀</li>
+<li>若应用中引入的第三方库出现冲突时，可为其增加类前缀</li>
+</ul>
+<h2 id="第十六条：提供”指定初始化方法”"><a href="#第十六条：提供”指定初始化方法”" class="headerlink" title="第十六条：提供”指定初始化方法”"></a>第十六条：提供”指定初始化方法”</h2><ul>
+<li>在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，应复写超类初始化方法改为调用本类”指定初始化方法”，设置默认值或报异常(在OC中只有很严重的错误才应该报异常)</li>
+<li>如果遵循NSCoding协议，则可能出现不止一个”指定初始化方法”，也就是不止一次调用[super init];</li>
+</ul>
+<h2 id="第十七条：实现description方法"><a href="#第十七条：实现description方法" class="headerlink" title="第十七条：实现description方法"></a>第十七条：实现description方法</h2><p>在需要打印日志时，object对象会受到description消息，该方法返回的描述信息将取代打印中”格式字符串”里的”%@”，此方法是定义在NSObject协议里.</p>
+<ul>
+<li>我们可以这样实现它</li>
+</ul>
+<pre><code>
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ ",@{
+                                               @"once":self.once,
+                                               @"usernameKey":self.usernameKey,
+                                               @"passwordKey":self.passwordKey,
+                                               @"loginCodeKey":self.loginCodeKey,
+                                               @"loginCodeValue":self.loginCodeValue,
+                                               }];
+}
+</code></pre>
+
+<p><font color="red">注意</font>:当只想使用LLDB控制台命令调试时(如:”po”命令)，我们应该复写debugDescription方法，该在NSObject类的默认实现中只是调用了description方法，但其只在LLDB调试时才调用。</p>
+<h2 id="第十八条：尽量使用不可变对象"><a href="#第十八条：尽量使用不可变对象" class="headerlink" title="第十八条：尽量使用不可变对象"></a>第十八条：尽量使用不可变对象</h2><ul>
+<li>尽量创建不可变对象</li>
+<li>若某属性仅可于对象内部修改，则在”class-continuation分类”中将其readonly属性拓展为readwrite属性</li>
+<li>不要在返回的对象上查询类型以确定其是否可变</li>
+</ul>
+<h2 id="第十九条：使用清晰而协调的命名方式"><a href="#第十九条：使用清晰而协调的命名方式" class="headerlink" title="第十九条：使用清晰而协调的命名方式"></a>第十九条：使用清晰而协调的命名方式</h2><p>命名时应遵循驼峰命名法，属性、方法首字母小写，类名除前缀首字母大写</p>
+<p>方法命名的注意事项：</p>
+<ul>
+<li>如果方法的返回值是新创建的，那么方法名的首个词应该是返回值的类型，除非前面还有修饰语(如localizedString)</li>
+<li>应该把表示参数类型的名词放在参数前面</li>
+<li>如果方法要在当前对象上执行操作，就应该包含动词;若执行操作时还需参数，则应在动词后加一个或多个名词</li>
+<li>不要用str这种简称，应该用string这种全称</li>
+<li>Boolean属性应加is前缀，如果某方法返回非属性的Boolean值，那么应该根据其功能，选用has或is当前前缀</li>
+<li>将get这个前缀留给那些借由”输出参数”来保存返回值的方法</li>
+</ul>
+<p>类与协议命名的注意事项：</p>
+<ul>
+<li>起名时应遵循标准Objective-C命名规范</li>
+<li>如果从其他框架继承子类，务必遵循其命名惯例，如:从UIView类中继承的话，类名结尾也应为View，同理，创建自定义委托时，其命名应包含委托发起方名称，后面再跟上Delegate一次</li>
+</ul>
+<h2 id="第二十条：为私有方法名加前缀"><a href="#第二十条：为私有方法名加前缀" class="headerlink" title="第二十条：为私有方法名加前缀"></a>第二十条：为私有方法名加前缀</h2><ul>
+<li>给私有方法的名称加上类前缀，这样可以很容易的将其与公共方法区分开，笔者推荐使用”p_”为私有方法前缀，也可使用类名前缀</li>
+<li>不要单独使用一个下划线做私有方法前缀，这种写法是预留给苹果公司的，你可能会无意中复写方法</li>
+</ul>
+<h2 id="第二十一条：理解Objective-C错误模型"><a href="#第二十一条：理解Objective-C错误模型" class="headerlink" title="第二十一条：理解Objective-C错误模型"></a>第二十一条：理解Objective-C错误模型</h2><ul>
+<li>只有发生了可使整个应用程序崩溃的严重错误时，才应使用异常</li>
+<li>在错误不那么严重的情况下，可以使用”委托方法”来处理错误，也可以把错误信息放在NSError对象中，经由”输出参数”返回给调用者</li>
+</ul>
+<h2 id="第二十二条：理解NSCopying协议"><a href="#第二十二条：理解NSCopying协议" class="headerlink" title="第二十二条：理解NSCopying协议"></a>第二十二条：理解NSCopying协议</h2><p>使用对象时经常需要拷贝它，若想让自己的类支持拷贝操作，就要实现NSCopying协议，该协议只有一个方法:</p>
+<pre><code>
+-(id)copyWithZone:(NSZone *)zone;
+</code></pre>
+
+<ul>
+<li>简单实现NSCopying协议，首先遵守协议</li>
+</ul>
+<pre><code>
+@interface Car : NSObject < NSCopying >
+@property int speed;
+@property int lzNum;
+@end
+</code></pre>
+
+<ul>
+<li>实现copyWithZone方法</li>
+</ul>
+<pre><code>
+- (id)copyWithZone:(NSZone *)zone{
+    Car *c1 = [Car new];
+    c1.speed = _speed;
+    c1.lzNum = _lzNum; 
+    return c1;
+}
+</code></pre>
+
+<p>深浅拷贝问题：</p>
+<ul>
+<li>浅拷贝之后的内容与原始内容均指向相同对象.</li>
+<li>深拷贝之后的内容所指向的对象时原始内容中相关对象的一份拷贝</li>
+<li>在绝大多数情况下，执行的都是浅拷贝，如果需要在某对象上执行深拷贝，那么除非该类文档说它是用深拷贝来实现NSCoping协议的，某则，要么寻找能够执行深拷贝的方法，要么自己编写方法来做</li>
+</ul>
+<p><font color="red">总结</font>:</p>
+<ul>
+<li>若想要自己所写对象具有拷贝功能，则需实现NSCopying协议</li>
+<li>如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopying与NSmutableCopying协议</li>
+<li>复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应尽量执行浅拷贝</li>
+<li>如果你所写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/10/第三章-接口与API设计/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-第二章-对象、消息、运行时" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -844,98 +1011,6 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
 
   
-    <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git常用指令/">Git常用指令</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git常用指令/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-git init  在文件夹中初始化git，在哪个文件夹里初始化，哪个文件夹就受git控制
-git status   查看git文件夹的状态
-git add   把git文件夹中新添加的文件添加到git控制里
-git commit -m "初始化"   将git文件提交到版本库
-git push   将文件提交到服务器
-git push origin master   将文件推送到指定分支
-git log —-pretty=oneline   简洁提交记录
-git reflog   查看分支操作记录
-git reset —-hard XXX  回到指定分支，XXX为指定commit id
-git diff  工作区与暂存区的比较
-git diff —cached  暂存区与最近一次提交的比较
-git checkout -b xxx  创建并切换到分支xxx 
-git branch  查看所有与当前分支
-git merge xxx  合并xxx分支到当前分支
-git branch -d xxx  删除xxx分支
-git remote -v  查看远程仓库
-git checkout -b branch-name origin/branch-name  从本地创建远程库对应分支，名称最好保持一直
-</code></pre>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1107,6 +1182,98 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
 
 
   
+    <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/22/Git常用指令/">Git常用指令</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/22/Git常用指令/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>
+git init  在文件夹中初始化git，在哪个文件夹里初始化，哪个文件夹就受git控制
+git status   查看git文件夹的状态
+git add   把git文件夹中新添加的文件添加到git控制里
+git commit -m "初始化"   将git文件提交到版本库
+git push   将文件提交到服务器
+git push origin master   将文件推送到指定分支
+git log —-pretty=oneline   简洁提交记录
+git reflog   查看分支操作记录
+git reset —-hard XXX  回到指定分支，XXX为指定commit id
+git diff  工作区与暂存区的比较
+git diff —cached  暂存区与最近一次提交的比较
+git checkout -b xxx  创建并切换到分支xxx 
+git branch  查看所有与当前分支
+git merge xxx  合并xxx分支到当前分支
+git branch -d xxx  删除xxx分支
+git remote -v  查看远程仓库
+git checkout -b branch-name origin/branch-name  从本地创建远程库对应分支，名称最好保持一直
+</code></pre>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Button携带参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1193,88 +1360,10 @@ button.info = 要传的数据
 
 
   
-    <article id="post-SDWebImage导致内存过高" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/13/SDWebImage导致内存过高/">SDWebImage导致内存过高</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/13/SDWebImage导致内存过高/" class="archive-article-date">
-  	<time datetime="2016-12-13T03:53:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中遇到拖动UITableView内存暴涨的情况，仔细排查后发现是SDWebImage加载图片时内存缓存没有得到及时清理。</p>
-<p>首先了解下SDWebImage原理:<br>在默认设置下,当调用sd_setImageWithURL时:</p>
-<ul>
-<li>1.SD会先从内存缓存中取图片,如果取到,直接设置图片,如果没取到进行下一步</li>
-<li>2.从硬盘缓存目录中取图片,如果取到,直接设置图片,如果没取到进行下一步</li>
-<li>3.通过url下载图片,下载完成后会存入内存缓存和硬盘缓存中</li>
-</ul>
-<p>将下列代码添加到UITableView每次加载请求时可以很好的解决内存暴涨问题</p>
-<pre><code>[[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];</code></pre>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/13/SDWebImage导致内存过高/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1360,15 +1449,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">杂</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1377,6 +1462,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">杂</a>
               </li>
             
             <div class="clearfix"></div>
