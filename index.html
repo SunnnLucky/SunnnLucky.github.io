@@ -129,6 +129,112 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mutableCopy并不一定是深拷贝" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/10/mutableCopy并不一定是深拷贝/">mutableCopy并不一定是深拷贝</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/10/mutableCopy并不一定是深拷贝/" class="archive-article-date">
+  	<time datetime="2018-04-10T13:41:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>猜测一下下列代码打印结果</p>
+<pre><code>
+NSMutableArray * array1 = [@[[@"one" mutableCopy],@2,@3] mutableCopy];
+NSMutableArray * array2 = [array1 mutableCopy];
+NSMutableString * str = array1[0];
+[str appendString:@"---ONE"];
+NSLog(@"数组地址:%p-----数组内容%@-------可变元素地址%p",&array1,array1,array1[0]);
+NSLog(@"数组地址:%p-----数组内容%@-------可变元素地址%p",&array2,array2,array2[0]);
+</code></pre>
+
+<p>实际结果是:</p>
+<pre><code>
+数组地址:0x7ffeef7fea60-----数组内容(
+    "one---ONE",
+    2,
+    3
+)-------可变元素地址0x60400024bee0
+
+数组地址:0x7ffeef7fea58-----数组内容(
+    "one---ONE",
+    2,
+    3
+)-------可变元素地址0x60400024bee0
+</code></pre>
+
+<p>由此可见，虽然可变数组地址改变了，但可变数组内部可变元素并没有进行深拷贝，这种情况下并不能称mutableCopy是深拷贝(deep copy)方法</p>
+<p>上述案例如果想实现深拷贝，可将mutableCopy替换为</p>
+<pre><code>
+NSMutableArray * array2 = [[NSMutableArray alloc] initWithArray:array1 copyItems:YES];
+</code></pre>
+
+<p>此方法若copyItems为YES，则会想数组中每个元素发送copy信息，虽然这样可以解决当前案例问题，但假如可变数组中的可变元素中还有更深层可变元素，此方法就鞭长莫及了，需要遵循NSCopying与NSMuableCopying协议，复写”copyWithZone”方法实现真正意义上的深拷贝</p>
+<p>由此得知，在OC中，”copy”与”mutableCopy”是否为真正意义上的深拷贝，还是要看其遵守协议的具体实现</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/10/mutableCopy并不一定是深拷贝/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-第三章-接口与API设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1274,92 +1380,6 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
 
 
   
-    <article id="post-Button携带参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/20/Button携带参数/">Button携带参数</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/20/Button携带参数/" class="archive-article-date">
-  	<time datetime="2017-07-20T04:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身<br><br>这个时候我们就要通过别的方法来变相的传递参数:<br><br>比如:自定义Button,给Button附加一个属性:</p>
-<pre><code>
-@interface SLButton : UIButton
-@property (nonatomic, strong) id info;
-@end
-</code></pre>
-
-
-<p>在初始化自定义Button的时候:</p>
-<pre><code>
-SLButton *button = [SLButton alloc] init];
-button.info = 要传的数据
-</code></pre>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/20/Button携带参数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1461,11 +1481,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color2">杂</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">杂</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
             
             <div class="clearfix"></div>

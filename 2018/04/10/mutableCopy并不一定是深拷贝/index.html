@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Button携带参数 | Hexo</title>
+  <title>mutableCopy并不一定是深拷贝 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身这个时候我们就要通过别的方法来变相的传递参数:比如:自定义Button,给Button附加一个属性:  @interface SLButton : UIButton @property (nonatomic, strong) id info; @end    在初始化自定义Button的时候:">
+  <meta name="description" content="猜测一下下列代码打印结果  NSMutableArray * array1 = [@[[@&quot;one&quot; mutableCopy],@2,@3] mutableCopy]; NSMutableArray * array2 = [array1 mutableCopy]; NSMutableString * str = array1[0]; [str appendString:@&quot;---ONE&quot;]; NS">
 <meta name="keywords" content="Objective-C">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Button携带参数">
-<meta property="og:url" content="http://yoursite.com/2017/07/20/Button携带参数/index.html">
+<meta property="og:title" content="mutableCopy并不一定是深拷贝">
+<meta property="og:url" content="http://yoursite.com/2018/04/10/mutableCopy并不一定是深拷贝/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身这个时候我们就要通过别的方法来变相的传递参数:比如:自定义Button,给Button附加一个属性:  @interface SLButton : UIButton @property (nonatomic, strong) id info; @end    在初始化自定义Button的时候:">
-<meta property="og:updated_time" content="2017-12-06T14:07:07.772Z">
+<meta property="og:description" content="猜测一下下列代码打印结果  NSMutableArray * array1 = [@[[@&quot;one&quot; mutableCopy],@2,@3] mutableCopy]; NSMutableArray * array2 = [array1 mutableCopy]; NSMutableString * str = array1[0]; [str appendString:@&quot;---ONE&quot;]; NS">
+<meta property="og:updated_time" content="2018-04-10T13:58:42.940Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Button携带参数">
-<meta name="twitter:description" content="开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身这个时候我们就要通过别的方法来变相的传递参数:比如:自定义Button,给Button附加一个属性:  @interface SLButton : UIButton @property (nonatomic, strong) id info; @end    在初始化自定义Button的时候:">
+<meta name="twitter:title" content="mutableCopy并不一定是深拷贝">
+<meta name="twitter:description" content="猜测一下下列代码打印结果  NSMutableArray * array1 = [@[[@&quot;one&quot; mutableCopy],@2,@3] mutableCopy]; NSMutableArray * array2 = [array1 mutableCopy]; NSMutableString * str = array1[0]; [str appendString:@&quot;---ONE&quot;]; NS">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -132,39 +132,59 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Button携带参数" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mutableCopy并不一定是深拷贝" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Button携带参数
+      mutableCopy并不一定是深拷贝
     </h1>
   
 
         
-        <a href="/2017/07/20/Button携带参数/" class="archive-article-date">
-  	<time datetime="2017-07-20T04:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
+        <a href="/2018/04/10/mutableCopy并不一定是深拷贝/" class="archive-article-date">
+  	<time datetime="2018-04-10T13:41:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身<br><br>这个时候我们就要通过别的方法来变相的传递参数:<br><br>比如:自定义Button,给Button附加一个属性:</p>
+        <p>猜测一下下列代码打印结果</p>
 <pre><code>
-@interface SLButton : UIButton
-@property (nonatomic, strong) id info;
-@end
+NSMutableArray * array1 = [@[[@"one" mutableCopy],@2,@3] mutableCopy];
+NSMutableArray * array2 = [array1 mutableCopy];
+NSMutableString * str = array1[0];
+[str appendString:@"---ONE"];
+NSLog(@"数组地址:%p-----数组内容%@-------可变元素地址%p",&array1,array1,array1[0]);
+NSLog(@"数组地址:%p-----数组内容%@-------可变元素地址%p",&array2,array2,array2[0]);
 </code></pre>
 
-
-<p>在初始化自定义Button的时候:</p>
+<p>实际结果是:</p>
 <pre><code>
-SLButton *button = [SLButton alloc] init];
-button.info = 要传的数据
+数组地址:0x7ffeef7fea60-----数组内容(
+    "one---ONE",
+    2,
+    3
+)-------可变元素地址0x60400024bee0
+
+数组地址:0x7ffeef7fea58-----数组内容(
+    "one---ONE",
+    2,
+    3
+)-------可变元素地址0x60400024bee0
 </code></pre>
+
+<p>由此可见，虽然可变数组地址改变了，但可变数组内部可变元素并没有进行深拷贝，这种情况下并不能称mutableCopy是深拷贝(deep copy)方法</p>
+<p>上述案例如果想实现深拷贝，可将mutableCopy替换为</p>
+<pre><code>
+NSMutableArray * array2 = [[NSMutableArray alloc] initWithArray:array1 copyItems:YES];
+</code></pre>
+
+<p>此方法若copyItems为YES，则会想数组中每个元素发送copy信息，虽然这样可以解决当前案例问题，但假如可变数组中的可变元素中还有更深层可变元素，此方法就鞭长莫及了，需要遵循NSCopying与NSMuableCopying协议，复写”copyWithZone”方法实现真正意义上的深拷贝</p>
+<p>由此得知，在OC中，”copy”与”mutableCopy”是否为真正意义上的深拷贝，还是要看其遵守协议的具体实现</p>
 
       
 
@@ -260,7 +280,7 @@ button.info = 要传的数据
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/07/20/Button携带参数/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/04/10/mutableCopy并不一定是深拷贝/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +294,9 @@ button.info = 要传的数据
   
 <nav id="article-nav">
   
-    <a href="/2017/07/22/Git常用指令/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Git常用指令
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/13/SDWebImage导致内存过高/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SDWebImage导致内存过高</div>
+    <a href="/2018/04/10/第三章-接口与API设计/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第三章-接口与API设计</div>
       <i class="icon-circle-right"></i>
     </a>
   
