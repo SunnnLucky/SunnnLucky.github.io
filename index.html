@@ -129,6 +129,110 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-第四章-协议与分类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/11/第四章-协议与分类/">第四章-协议与分类</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/11/第四章-协议与分类/" class="archive-article-date">
+  	<time datetime="2018-04-11T03:54:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第二十三条：通过委托与数据源协议进行对象间通信"><a href="#第二十三条：通过委托与数据源协议进行对象间通信" class="headerlink" title="第二十三条：通过委托与数据源协议进行对象间通信"></a>第二十三条：通过委托与数据源协议进行对象间通信</h2><ul>
+<li>委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象</li>
+<li>将委托对象应支持的接口定义成协议，在协议中把可能需要处理的事件定义为方法</li>
+<li>当某对象需要从另一个对象中获取数据时，可以使用委托模式，这种情况下，该模式也叫”数据源协议”</li>
+<li>若有必要，可实现含有位端的结构体，将委托对象是否能响应相关协议方法缓存至其中，这样就避免频繁调用代理方法时还去判断代理是否实现了代理方法</li>
+</ul>
+<h2 id="第二十四条：将类的实现代码分散到便于管理的数个分类之中"><a href="#第二十四条：将类的实现代码分散到便于管理的数个分类之中" class="headerlink" title="第二十四条：将类的实现代码分散到便于管理的数个分类之中"></a>第二十四条：将类的实现代码分散到便于管理的数个分类之中</h2><ul>
+<li>使用分类机制把类的实现代码划分成易于管理的小块</li>
+<li>将应该视为”私有”的方法归入名为”Private”的分类中，以隐藏实现细节</li>
+</ul>
+<h2 id="第二十五条：总是为第三方类的分类名称加类前缀"><a href="#第二十五条：总是为第三方类的分类名称加类前缀" class="headerlink" title="第二十五条：总是为第三方类的分类名称加类前缀"></a>第二十五条：总是为第三方类的分类名称加类前缀</h2><ul>
+<li>分类中的方法会有覆盖问题，如果分类和原来类出现同名的方法, 优先调用分类中的方法, 原来类中的方法会被忽略</li>
+<li>向第三方类中添加分类时，总应给其名称加上专用前缀</li>
+<li>向第三方类中添加分类时，总应给其方法名加上专用前缀</li>
+</ul>
+<h2 id="第二十六条：勿在分类中声明属性"><a href="#第二十六条：勿在分类中声明属性" class="headerlink" title="第二十六条：勿在分类中声明属性"></a>第二十六条：勿在分类中声明属性</h2><ul>
+<li>分类不可声明属性，如非要添加使用用runtime</li>
+<li>把封装数据所用的全部属性都定义在主接口里</li>
+<li>在”class-continuation分类”(类延展)之外的其他分类中，可以定义存取方法，但尽量不要定义属性</li>
+</ul>
+<h2 id="第二十七条：使用”class-continuation分类”-类延展-隐藏实现细节"><a href="#第二十七条：使用”class-continuation分类”-类延展-隐藏实现细节" class="headerlink" title="第二十七条：使用”class-continuation分类”(类延展)隐藏实现细节"></a>第二十七条：使用”class-continuation分类”(类延展)隐藏实现细节</h2><ul>
+<li>通过”class-continuation分类”向类中新增实例变量</li>
+<li>如果某属性在主接口中声明为”只读”，而类的内部又要用设置方法修改时，那么就在”class-continuation分类”中将其拓展为”可读写”</li>
+<li>可以把私有方法的原形声明在”class-continuation分类”中</li>
+<li>若想使类所遵循的协议不为人知，则可于”class-continuation分类”中声明</li>
+</ul>
+<h2 id="第二十八条：通过协议提供匿名对象"><a href="#第二十八条：通过协议提供匿名对象" class="headerlink" title="第二十八条：通过协议提供匿名对象"></a>第二十八条：通过协议提供匿名对象</h2><ul>
+<li>协议可以再某种程度上提供匿名类型。具体的对象类型可以淡化成遵从某协议的id类型，协议里规定了对象所应实现的方法</li>
+<li>使用匿名对象来隐藏类型名称</li>
+<li>如果具体类型不重要，重要的是对象能够响应(定义在协议里的)特定方法，那么可使用匿名对象来表示</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/11/第四章-协议与分类/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-mutableCopy并不一定是深拷贝" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -976,10 +1080,10 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
         <h2 id="按权相加法"><a href="#按权相加法" class="headerlink" title="按权相加法"></a>按权相加法</h2><p>例：将二进制数字 1101 转换为十进制</p>
 <p>计算过程：</p>
 <ul>
-<li>1.拆分二进制<pre><font>(1)         (1)          (0)         (1)</font></pre></li>
-<li>2.从尾部依次增加2的幂<pre><font>(2^3)       (2^2)        (2^1)       (2^0)</font></pre></li>
-<li>3.将第二步结果与原位相乘<pre><font>(2^3 * 1) + (2^2 * 1) +  (2^1 * 0) + (2^0 * 1)</font></pre></li>
-<li>4.所得结果相加<br><pre><font>(8)    +    (4)    +     (0)    +    (1)</font></pre><br>结果 = <code>13</code></li>
+<li>1.拆分二进制<pre><font color="black">(1)         (1)          (0)         (1)</font></pre></li>
+<li>2.从尾部依次增加2的幂<pre><font color="black">(2^3)       (2^2)        (2^1)       (2^0)</font></pre></li>
+<li>3.将第二步结果与原位相乘<pre><font color="black">(2^3 * 1) + (2^2 * 1) +  (2^1 * 0) + (2^0 * 1)</font></pre></li>
+<li>4.所得结果相加<br><pre><font color="black">(8)    +    (4)    +     (0)    +    (1)</font></pre><br>结果 = <code>13</code></li>
 </ul>
 
       
@@ -1117,19 +1221,19 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
 
   
-    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
+      <a class="article-title" href="/2017/07/22/Git常用指令/">Git常用指令</a>
     </h1>
   
 
         
-        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
+        <a href="/2017/07/22/Git常用指令/" class="archive-article-date">
   	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
 </a>
         
@@ -1138,19 +1242,25 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
     <div class="article-entry" itemprop="articleBody">
       
         <pre><code>
-查看分支：git branch
-创建分支：git branch 'name'
-切换分支：git checkout 'name'
-创建+切换分支：git checkout -b 'name'
-合并某分支到当前分支：git merge 'name'
-普通方式合并：git merge --no-ff -m "merge with no-ff" dev
-删除分支：git branch -d 'name'
-查看分支合并：git log --graph --pretty=oneline --abbrev-commit
-存储当前工作分支：git stash
-查看存储工作分支：git stash list
-恢复工作分支：git stash apply  或者  git stash pop
-恢复指定工作分支：git stash apply stash@{0}
+git init  在文件夹中初始化git，在哪个文件夹里初始化，哪个文件夹就受git控制
+git status   查看git文件夹的状态
+git add   把git文件夹中新添加的文件添加到git控制里
+git commit -m "初始化"   将git文件提交到版本库
+git push   将文件提交到服务器
+git push origin master   将文件推送到指定分支
+git log —-pretty=oneline   简洁提交记录
+git reflog   查看分支操作记录
+git reset —-hard XXX  回到指定分支，XXX为指定commit id
+git diff  工作区与暂存区的比较
+git diff —cached  暂存区与最近一次提交的比较
+git checkout -b xxx  创建并切换到分支xxx 
+git branch  查看所有与当前分支
+git merge xxx  合并xxx分支到当前分支
+git branch -d xxx  删除xxx分支
+git remote -v  查看远程仓库
+git checkout -b branch-name origin/branch-name  从本地创建远程库对应分支，名称最好保持一直
 </code></pre>
+
       
 
       
@@ -1173,7 +1283,7 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
         </p>
       
 
@@ -1259,98 +1369,6 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git常用指令/">Git常用指令</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git常用指令/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-git init  在文件夹中初始化git，在哪个文件夹里初始化，哪个文件夹就受git控制
-git status   查看git文件夹的状态
-git add   把git文件夹中新添加的文件添加到git控制里
-git commit -m "初始化"   将git文件提交到版本库
-git push   将文件提交到服务器
-git push origin master   将文件推送到指定分支
-git log —-pretty=oneline   简洁提交记录
-git reflog   查看分支操作记录
-git reset —-hard XXX  回到指定分支，XXX为指定commit id
-git diff  工作区与暂存区的比较
-git diff —cached  暂存区与最近一次提交的比较
-git checkout -b xxx  创建并切换到分支xxx 
-git branch  查看所有与当前分支
-git merge xxx  合并xxx分支到当前分支
-git branch -d xxx  删除xxx分支
-git remote -v  查看远程仓库
-git checkout -b branch-name origin/branch-name  从本地创建远程库对应分支，名称最好保持一直
-</code></pre>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
         </p>
       
 
@@ -1469,15 +1487,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1486,6 +1500,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
             
             <div class="clearfix"></div>

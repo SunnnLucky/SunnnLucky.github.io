@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Button携带参数 | Hexo</title>
+  <title>第四章-协议与分类 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身这个时候我们就要通过别的方法来变相的传递参数:比如:自定义Button,给Button附加一个属性:  @interface SLButton : UIButton @property (nonatomic, strong) id info; @end    在初始化自定义Button的时候:">
-<meta name="keywords" content="Objective-C">
+  <meta name="description" content="第二十三条：通过委托与数据源协议进行对象间通信 委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象 将委托对象应支持的接口定义成协议，在协议中把可能需要处理的事件定义为方法 当某对象需要从另一个对象中获取数据时，可以使用委托模式，这种情况下，该模式也叫”数据源协议” 若有必要，可实现含有位端的结构体，将委托对象是否能响应相关协议方法缓存至其中，这样就避免频繁调用代理方法时还去判断代理是">
+<meta name="keywords" content="编写高质量OC的52个有效方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Button携带参数">
-<meta property="og:url" content="http://yoursite.com/2017/07/20/Button携带参数/index.html">
+<meta property="og:title" content="第四章-协议与分类">
+<meta property="og:url" content="http://yoursite.com/2018/04/11/第四章-协议与分类/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身这个时候我们就要通过别的方法来变相的传递参数:比如:自定义Button,给Button附加一个属性:  @interface SLButton : UIButton @property (nonatomic, strong) id info; @end    在初始化自定义Button的时候:">
-<meta property="og:updated_time" content="2018-04-10T15:33:08.755Z">
+<meta property="og:description" content="第二十三条：通过委托与数据源协议进行对象间通信 委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象 将委托对象应支持的接口定义成协议，在协议中把可能需要处理的事件定义为方法 当某对象需要从另一个对象中获取数据时，可以使用委托模式，这种情况下，该模式也叫”数据源协议” 若有必要，可实现含有位端的结构体，将委托对象是否能响应相关协议方法缓存至其中，这样就避免频繁调用代理方法时还去判断代理是">
+<meta property="og:updated_time" content="2018-04-11T07:04:48.724Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Button携带参数">
-<meta name="twitter:description" content="开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身这个时候我们就要通过别的方法来变相的传递参数:比如:自定义Button,给Button附加一个属性:  @interface SLButton : UIButton @property (nonatomic, strong) id info; @end    在初始化自定义Button的时候:">
+<meta name="twitter:title" content="第四章-协议与分类">
+<meta name="twitter:description" content="第二十三条：通过委托与数据源协议进行对象间通信 委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象 将委托对象应支持的接口定义成协议，在协议中把可能需要处理的事件定义为方法 当某对象需要从另一个对象中获取数据时，可以使用委托模式，这种情况下，该模式也叫”数据源协议” 若有必要，可实现含有位端的结构体，将委托对象是否能响应相关协议方法缓存至其中，这样就避免频繁调用代理方法时还去判断代理是">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -132,39 +132,57 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Button携带参数" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-第四章-协议与分类" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Button携带参数
+      第四章-协议与分类
     </h1>
   
 
         
-        <a href="/2017/07/20/Button携带参数/" class="archive-article-date">
-  	<time datetime="2017-07-20T04:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
+        <a href="/2018/04/11/第四章-协议与分类/" class="archive-article-date">
+  	<time datetime="2018-04-11T03:54:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身<br><br>这个时候我们就要通过别的方法来变相的传递参数:<br><br>比如:自定义Button,给Button附加一个属性:</p>
-<pre><code>
-@interface SLButton : UIButton
-@property (nonatomic, strong) id info;
-@end
-</code></pre>
-
-
-<p>在初始化自定义Button的时候:</p>
-<pre><code>
-SLButton *button = [SLButton alloc] init];
-button.info = 要传的数据
-</code></pre>
+        <h2 id="第二十三条：通过委托与数据源协议进行对象间通信"><a href="#第二十三条：通过委托与数据源协议进行对象间通信" class="headerlink" title="第二十三条：通过委托与数据源协议进行对象间通信"></a>第二十三条：通过委托与数据源协议进行对象间通信</h2><ul>
+<li>委托模式为对象提供了一套接口，使其可由此将相关事件告知其他对象</li>
+<li>将委托对象应支持的接口定义成协议，在协议中把可能需要处理的事件定义为方法</li>
+<li>当某对象需要从另一个对象中获取数据时，可以使用委托模式，这种情况下，该模式也叫”数据源协议”</li>
+<li>若有必要，可实现含有位端的结构体，将委托对象是否能响应相关协议方法缓存至其中，这样就避免频繁调用代理方法时还去判断代理是否实现了代理方法</li>
+</ul>
+<h2 id="第二十四条：将类的实现代码分散到便于管理的数个分类之中"><a href="#第二十四条：将类的实现代码分散到便于管理的数个分类之中" class="headerlink" title="第二十四条：将类的实现代码分散到便于管理的数个分类之中"></a>第二十四条：将类的实现代码分散到便于管理的数个分类之中</h2><ul>
+<li>使用分类机制把类的实现代码划分成易于管理的小块</li>
+<li>将应该视为”私有”的方法归入名为”Private”的分类中，以隐藏实现细节</li>
+</ul>
+<h2 id="第二十五条：总是为第三方类的分类名称加类前缀"><a href="#第二十五条：总是为第三方类的分类名称加类前缀" class="headerlink" title="第二十五条：总是为第三方类的分类名称加类前缀"></a>第二十五条：总是为第三方类的分类名称加类前缀</h2><ul>
+<li>分类中的方法会有覆盖问题，如果分类和原来类出现同名的方法, 优先调用分类中的方法, 原来类中的方法会被忽略</li>
+<li>向第三方类中添加分类时，总应给其名称加上专用前缀</li>
+<li>向第三方类中添加分类时，总应给其方法名加上专用前缀</li>
+</ul>
+<h2 id="第二十六条：勿在分类中声明属性"><a href="#第二十六条：勿在分类中声明属性" class="headerlink" title="第二十六条：勿在分类中声明属性"></a>第二十六条：勿在分类中声明属性</h2><ul>
+<li>分类不可声明属性，如非要添加使用用runtime</li>
+<li>把封装数据所用的全部属性都定义在主接口里</li>
+<li>在”class-continuation分类”(类延展)之外的其他分类中，可以定义存取方法，但尽量不要定义属性</li>
+</ul>
+<h2 id="第二十七条：使用”class-continuation分类”-类延展-隐藏实现细节"><a href="#第二十七条：使用”class-continuation分类”-类延展-隐藏实现细节" class="headerlink" title="第二十七条：使用”class-continuation分类”(类延展)隐藏实现细节"></a>第二十七条：使用”class-continuation分类”(类延展)隐藏实现细节</h2><ul>
+<li>通过”class-continuation分类”向类中新增实例变量</li>
+<li>如果某属性在主接口中声明为”只读”，而类的内部又要用设置方法修改时，那么就在”class-continuation分类”中将其拓展为”可读写”</li>
+<li>可以把私有方法的原形声明在”class-continuation分类”中</li>
+<li>若想使类所遵循的协议不为人知，则可于”class-continuation分类”中声明</li>
+</ul>
+<h2 id="第二十八条：通过协议提供匿名对象"><a href="#第二十八条：通过协议提供匿名对象" class="headerlink" title="第二十八条：通过协议提供匿名对象"></a>第二十八条：通过协议提供匿名对象</h2><ul>
+<li>协议可以再某种程度上提供匿名类型。具体的对象类型可以淡化成遵从某协议的id类型，协议里规定了对象所应实现的方法</li>
+<li>使用匿名对象来隐藏类型名称</li>
+<li>如果具体类型不重要，重要的是对象能够响应(定义在协议里的)特定方法，那么可使用匿名对象来表示</li>
+</ul>
 
       
 
@@ -204,7 +222,7 @@ button.info = 要传的数据
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
         		</li>
       		
 		</ul>
@@ -260,7 +278,7 @@ button.info = 要传的数据
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2017/07/20/Button携带参数/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/11/第四章-协议与分类/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +292,9 @@ button.info = 要传的数据
   
 <nav id="article-nav">
   
-    <a href="/2017/07/22/Git分支操作/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Git分支操作
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/13/SDWebImage导致内存过高/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SDWebImage导致内存过高</div>
+    <a href="/2018/04/10/mutableCopy并不一定是深拷贝/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mutableCopy并不一定是深拷贝</div>
       <i class="icon-circle-right"></i>
     </a>
   
