@@ -129,6 +129,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-第五章-内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/17/第五章-内存管理/">第五章-内存管理</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/17/第五章-内存管理/" class="archive-article-date">
+  	<time datetime="2018-04-17T03:06:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第二十九条：理解引用计数"><a href="#第二十九条：理解引用计数" class="headerlink" title="第二十九条：理解引用计数"></a>第二十九条：理解引用计数</h2><ul>
+<li>引用计数机制通过可以递增递减的计数器来管理内存。对象创建好之后，其保留的计数至少为1。若保留计数为正，则对象继续存活。当保留计数为0时，则对象被销毁。</li>
+<li>在对象的生命周期时，其与对象通过引用来保留或释放此对象。保留与释放操作分别会递增及递减保留计数</li>
+</ul>
+<h2 id="第三十条：以ARC简化引用计数"><a href="#第三十条：以ARC简化引用计数" class="headerlink" title="第三十条：以ARC简化引用计数"></a>第三十条：以ARC简化引用计数</h2><ul>
+<li>有ARC之后，程序员就无需担心内存管理问题了，使用ARC来编程，可省去类中居多”样板代码”</li>
+<li>ARC管理对象生命周期的办法基本上就是：在合适的地方插入”保留”及”释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行”保留”及”释放”操作</li>
+<li>由方法所返回的对象，其内存管理语义总是通过方法名来体现，ARC将此确定为开发者必须遵守的规则(alloc，new，copy，mutableCopy)</li>
+<li>ARC只负责管理OC对象内存，尤其要注意：CoreFoundation对象不归ARC管理，开发者必须适时调用CFReatin/CFRelease</li>
+</ul>
+<h2 id="第三十一条：在dealloc方法中只释放引用并解除监听"><a href="#第三十一条：在dealloc方法中只释放引用并解除监听" class="headerlink" title="第三十一条：在dealloc方法中只释放引用并解除监听"></a>第三十一条：在dealloc方法中只释放引用并解除监听</h2><ul>
+<li>在dealloc方法里，应该做的事情就是释放指向其他对象的引用，并取消原来订阅的”键值观测”(KVO)或NSNotificationCenter等通知，不要做其他事情</li>
+<li>如果对象持有文件描述符等系统资源，那么应该专门编写一个方法来释放此种资源。这样的类要和其他使用者约定:用完资源后必须调用close方法</li>
+<li>执行异步任务的方法不应在dealloc里调用，只能在正常状态下执行的那些方法也不应在dealloc里调用，因为此时对象已处于正在回收的状态了。</li>
+<li>dealloc里也不要调用属性的存取方法，因为有人可能会复写这些方法，并于其中做一些无法在回收阶段执行的操作，此外，属性可能正处于”KVO”机制监控下，该属性的观察者可能会在属性改变时”保留”或使用这个即将回收的对象</li>
+</ul>
+<h2 id="第三十二条：编写”异常安全代码”时留意内存管理问题"><a href="#第三十二条：编写”异常安全代码”时留意内存管理问题" class="headerlink" title="第三十二条：编写”异常安全代码”时留意内存管理问题"></a>第三十二条：编写”异常安全代码”时留意内存管理问题</h2><ul>
+<li>捕获异常时，一定要注意将try块内所创立的对象清理干净</li>
+<li>默认情况下，ARC不生成安全处理异常所需的清理代码。开启编译器标志后，可以生成这种代码，不过会导致应用程序变大，而且会降低运行效率</li>
+</ul>
+<h2 id="第三十三条：以弱引用避免保留环"><a href="#第三十三条：以弱引用避免保留环" class="headerlink" title="第三十三条：以弱引用避免保留环"></a>第三十三条：以弱引用避免保留环</h2><ul>
+<li>将某些引用设置为weak，可避免出现”保留环”</li>
+<li>weak引用可以自动清空，也可以不自动清空，自动清空是随着ARC而引入的新特性，由运行期系统来实现。在具备自动清空功能的弱引用上，可以随意读取其数据，因为这种引用不会指向已经回收过的对象</li>
+</ul>
+<h2 id="第三十四条：以”自动释放池块”降低内存峰值"><a href="#第三十四条：以”自动释放池块”降低内存峰值" class="headerlink" title="第三十四条：以”自动释放池块”降低内存峰值"></a>第三十四条：以”自动释放池块”降低内存峰值</h2><ul>
+<li>自动释放池排布在栈中，对象收到autorelease消息后，系统将其放入最顶端的池里</li>
+<li>合理运用自动释放池，可降低应用程序的内存峰值:</li>
+</ul>
+<pre><code>
+NSArray * databaseRecords = @[@{@"name":@"张三"},@{@"name":@"李四"},@{@"name":@"王五"}];
+NSMutableArray * array = [NSMutableArray array];
+for (NSDictionary * record in databaseRecords) {
+    @autoreleasepool{
+        SLPerson * person = [[SLPerson alloc] initWithRecord:record];
+        [array addObject:person];
+    }
+}
+</code></pre>
+
+<ul>
+<li>@@autoreleasepool这种新式写法能创建出更为轻便的自动释放池</li>
+</ul>
+<h2 id="第三十五条：用”僵尸对象”调试内存管理问题"><a href="#第三十五条：用”僵尸对象”调试内存管理问题" class="headerlink" title="第三十五条：用”僵尸对象”调试内存管理问题"></a>第三十五条：用”僵尸对象”调试内存管理问题</h2><ul>
+<li>系统在回收对象时，可以不将其真的回收，而是把它转化为僵尸对象。通过环境变量，NSZombieEnabled，或Scheme配置可开启此功能</li>
+<li>系统会修改对象的isa指针，令其指向特殊的僵尸类，从而使该对象变为僵尸对象。僵尸类能够响应所有的选择器，响应方式为，打印一条包含消息内容及其接收者的消息，然后终止应用程序</li>
+</ul>
+<h2 id="第三十六条：不要使用retainCount"><a href="#第三十六条：不要使用retainCount" class="headerlink" title="第三十六条：不要使用retainCount"></a>第三十六条：不要使用retainCount</h2><ul>
+<li>对象的保留计数看似有用，实则不然，因为任何给定时间点上的”绝对保留计数”都无法反应对象生命期的全貌</li>
+<li>引入ARC后，retainCount方法就正式废止了，在ARC下调用该方法会导致编译器报错</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/17/第五章-内存管理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-第四章-协议与分类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1221,19 +1344,19 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
 
   
-    <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git常用指令/">Git常用指令</a>
+      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
     </h1>
   
 
         
-        <a href="/2017/07/22/Git常用指令/" class="archive-article-date">
+        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
   	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
 </a>
         
@@ -1242,109 +1365,18 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
     <div class="article-entry" itemprop="articleBody">
       
         <pre><code>
-git init  在文件夹中初始化git，在哪个文件夹里初始化，哪个文件夹就受git控制
-git status   查看git文件夹的状态
-git add   把git文件夹中新添加的文件添加到git控制里
-git commit -m "初始化"   将git文件提交到版本库
-git push   将文件提交到服务器
-git push origin master   将文件推送到指定分支
-git log —-pretty=oneline   简洁提交记录
-git reflog   查看分支操作记录
-git reset —-hard XXX  回到指定分支，XXX为指定commit id
-git diff  工作区与暂存区的比较
-git diff —cached  暂存区与最近一次提交的比较
-git checkout -b xxx  创建并切换到分支xxx 
-git branch  查看所有与当前分支
-git merge xxx  合并xxx分支到当前分支
-git branch -d xxx  删除xxx分支
-git remote -v  查看远程仓库
-git checkout -b branch-name origin/branch-name  从本地创建远程库对应分支，名称最好保持一直
-</code></pre>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git标签操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git标签操作/">Git标签操作</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git标签操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-创建标签：git tag 'tagname'
-创建带有说明的标签：git tag -a v0.1 -m "version 0.1 released" 3628164
-创建PGP标签：git tag -s v0.2 -m "signed version 0.2 released" fec145a
-查看所有标签：git tag
-查找commit id：git log --pretty=oneline --abbrev-commit
-给对应的commit id打标签：git tag v0.9 6224937
-查看标签信息：git show 'tagname'
-删除标签：git tag -d v0.1
-推送指定标签到远程：git push origin 'tagname'
-推送所有标签到远程：git push origin --tags
-删除远程库标签（先从本地删除）：git push origin :refs/tags/v0.9
+查看分支：git branch
+创建分支：git branch 'name'
+切换分支：git checkout 'name'
+创建+切换分支：git checkout -b 'name'
+合并某分支到当前分支：git merge 'name'
+普通方式合并：git merge --no-ff -m "merge with no-ff" dev
+删除分支：git branch -d 'name'
+查看分支合并：git log --graph --pretty=oneline --abbrev-commit
+存储当前工作分支：git stash
+查看存储工作分支：git stash list
+恢复工作分支：git stash apply  或者  git stash pop
+恢复指定工作分支：git stash apply stash@{0}
 </code></pre>
       
 
@@ -1368,7 +1400,7 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
         </p>
       
 
@@ -1487,11 +1519,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1499,11 +1531,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
             
             <div class="clearfix"></div>
