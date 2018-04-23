@@ -129,6 +129,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-第六章-块与大中枢派发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/21/第六章-块与大中枢派发/">第六章-块与大中枢派发</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/21/第六章-块与大中枢派发/" class="archive-article-date">
+  	<time datetime="2018-04-21T12:37:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第三十七条：理解”块”这一概念"><a href="#第三十七条：理解”块”这一概念" class="headerlink" title="第三十七条：理解”块”这一概念"></a>第三十七条：理解”块”这一概念</h2><p>块与函数类似，只不过是定义在另一个函数中的，和定义它的那个函数共享同一个范围内的东西。<br>块其实就是个值，而且自有其相关类型。与int、float或Objective-C对象一样，也可以把块赋值给变量，然后像使用其他变量那样使用它。</p>
+<ul>
+<li>默认情况下，块捕获的变量是不可以在块内进行修改的，不过声明变量时可以加上<code>__block</code>修饰符，这样就可以再块内修改了</li>
+<li>块总能修改实例变量，所以在生声明时无需加<code>__block</code>。不过，如果通过读取或写入操作捕获了实例变量，那么也会自动把self变量一并捕获，因为实例变量是与self所指代的实例关联在一起的。此处要注意循环引用</li>
+<li>定义块的时候，其所占内存区为栈区，也就是说块只在定义它的范围内有效，给块对象发送copy信息可以将其从栈区复制到堆区，这样的话块就和标准的OC对象一样，具备引用计数了，不过ARC下无需手动释放</li>
+</ul>
+<h2 id="第三十八条：为常用的块类型创建typedef"><a href="#第三十八条：为常用的块类型创建typedef" class="headerlink" title="第三十八条：为常用的块类型创建typedef"></a>第三十八条：为常用的块类型创建typedef</h2><ul>
+<li>以typedef重新定义块类型，可令块变量用起来更加简单，也方便重构代码后的修改。</li>
+<li>定义新类型时应遵从现有的命名习惯，勿使其名称与别的类型相冲突</li>
+<li>不妨为同一个块签名定义多个类型别名。如果要重构的代码使用了块类型的某个别名，那么只需修改响应typedef中的块签名即可，无须改动其他的typedef。</li>
+</ul>
+<h2 id="第三十九条：用handler块降低代码分散程度"><a href="#第三十九条：用handler块降低代码分散程度" class="headerlink" title="第三十九条：用handler块降低代码分散程度"></a>第三十九条：用handler块降低代码分散程度</h2><ul>
+<li>在创建对象时，可以使用内联的handler块将相关业务逻辑一并声明</li>
+<li>在有多个实例需要监控时，如果采用委托模式，那么经常需要根据传入的对象来切换，而若使用handler块来实现，则可直接将块与相关对象放在一起</li>
+<li>设计API时如果用到了handler块，那么可以增加一个参数，使调用者可通过此参数来决定应该把块安排在哪个队列上执行</li>
+</ul>
+        
+          <a class="article-more-a" href="/2018/04/21/第六章-块与大中枢派发/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">编写高质量OC的52个有效方法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/21/第六章-块与大中枢派发/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-第五章-内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -159,47 +250,9 @@
 <li>由方法所返回的对象，其内存管理语义总是通过方法名来体现，ARC将此确定为开发者必须遵守的规则(alloc，new，copy，mutableCopy)</li>
 <li>ARC只负责管理OC对象内存，尤其要注意：CoreFoundation对象不归ARC管理，开发者必须适时调用CFReatin/CFRelease</li>
 </ul>
-<h2 id="第三十一条：在dealloc方法中只释放引用并解除监听"><a href="#第三十一条：在dealloc方法中只释放引用并解除监听" class="headerlink" title="第三十一条：在dealloc方法中只释放引用并解除监听"></a>第三十一条：在dealloc方法中只释放引用并解除监听</h2><ul>
-<li>在dealloc方法里，应该做的事情就是释放指向其他对象的引用，并取消原来订阅的”键值观测”(KVO)或NSNotificationCenter等通知，不要做其他事情</li>
-<li>如果对象持有文件描述符等系统资源，那么应该专门编写一个方法来释放此种资源。这样的类要和其他使用者约定:用完资源后必须调用close方法</li>
-<li>执行异步任务的方法不应在dealloc里调用，只能在正常状态下执行的那些方法也不应在dealloc里调用，因为此时对象已处于正在回收的状态了。</li>
-<li>dealloc里也不要调用属性的存取方法，因为有人可能会复写这些方法，并于其中做一些无法在回收阶段执行的操作，此外，属性可能正处于”KVO”机制监控下，该属性的观察者可能会在属性改变时”保留”或使用这个即将回收的对象</li>
-</ul>
-<h2 id="第三十二条：编写”异常安全代码”时留意内存管理问题"><a href="#第三十二条：编写”异常安全代码”时留意内存管理问题" class="headerlink" title="第三十二条：编写”异常安全代码”时留意内存管理问题"></a>第三十二条：编写”异常安全代码”时留意内存管理问题</h2><ul>
-<li>捕获异常时，一定要注意将try块内所创立的对象清理干净</li>
-<li>默认情况下，ARC不生成安全处理异常所需的清理代码。开启编译器标志后，可以生成这种代码，不过会导致应用程序变大，而且会降低运行效率</li>
-</ul>
-<h2 id="第三十三条：以弱引用避免保留环"><a href="#第三十三条：以弱引用避免保留环" class="headerlink" title="第三十三条：以弱引用避免保留环"></a>第三十三条：以弱引用避免保留环</h2><ul>
-<li>将某些引用设置为weak，可避免出现”保留环”</li>
-<li>weak引用可以自动清空，也可以不自动清空，自动清空是随着ARC而引入的新特性，由运行期系统来实现。在具备自动清空功能的弱引用上，可以随意读取其数据，因为这种引用不会指向已经回收过的对象</li>
-</ul>
-<h2 id="第三十四条：以”自动释放池块”降低内存峰值"><a href="#第三十四条：以”自动释放池块”降低内存峰值" class="headerlink" title="第三十四条：以”自动释放池块”降低内存峰值"></a>第三十四条：以”自动释放池块”降低内存峰值</h2><ul>
-<li>自动释放池排布在栈中，对象收到autorelease消息后，系统将其放入最顶端的池里</li>
-<li>合理运用自动释放池，可降低应用程序的内存峰值:</li>
-</ul>
-<pre><code>
-NSArray * databaseRecords = @[@{@"name":@"张三"},@{@"name":@"李四"},@{@"name":@"王五"}];
-NSMutableArray * array = [NSMutableArray array];
-for (NSDictionary * record in databaseRecords) {
-    @autoreleasepool{
-        SLPerson * person = [[SLPerson alloc] initWithRecord:record];
-        [array addObject:person];
-    }
-}
-</code></pre>
-
-<ul>
-<li>@@autoreleasepool这种新式写法能创建出更为轻便的自动释放池</li>
-</ul>
-<h2 id="第三十五条：用”僵尸对象”调试内存管理问题"><a href="#第三十五条：用”僵尸对象”调试内存管理问题" class="headerlink" title="第三十五条：用”僵尸对象”调试内存管理问题"></a>第三十五条：用”僵尸对象”调试内存管理问题</h2><ul>
-<li>系统在回收对象时，可以不将其真的回收，而是把它转化为僵尸对象。通过环境变量，NSZombieEnabled，或Scheme配置可开启此功能</li>
-<li>系统会修改对象的isa指针，令其指向特殊的僵尸类，从而使该对象变为僵尸对象。僵尸类能够响应所有的选择器，响应方式为，打印一条包含消息内容及其接收者的消息，然后终止应用程序</li>
-</ul>
-<h2 id="第三十六条：不要使用retainCount"><a href="#第三十六条：不要使用retainCount" class="headerlink" title="第三十六条：不要使用retainCount"></a>第三十六条：不要使用retainCount</h2><ul>
-<li>对象的保留计数看似有用，实则不然，因为任何给定时间点上的”绝对保留计数”都无法反应对象生命期的全貌</li>
-<li>引入ARC后，retainCount方法就正式废止了，在ARC下调用该方法会导致编译器报错</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/04/17/第五章-内存管理/#more">more >></a>
+        
       
 
       
@@ -287,23 +340,9 @@ for (NSDictionary * record in databaseRecords) {
 <li>向第三方类中添加分类时，总应给其名称加上专用前缀</li>
 <li>向第三方类中添加分类时，总应给其方法名加上专用前缀</li>
 </ul>
-<h2 id="第二十六条：勿在分类中声明属性"><a href="#第二十六条：勿在分类中声明属性" class="headerlink" title="第二十六条：勿在分类中声明属性"></a>第二十六条：勿在分类中声明属性</h2><ul>
-<li>分类不可声明属性，如非要添加使用用runtime</li>
-<li>把封装数据所用的全部属性都定义在主接口里</li>
-<li>在”class-continuation分类”(类延展)之外的其他分类中，可以定义存取方法，但尽量不要定义属性</li>
-</ul>
-<h2 id="第二十七条：使用”class-continuation分类”-类延展-隐藏实现细节"><a href="#第二十七条：使用”class-continuation分类”-类延展-隐藏实现细节" class="headerlink" title="第二十七条：使用”class-continuation分类”(类延展)隐藏实现细节"></a>第二十七条：使用”class-continuation分类”(类延展)隐藏实现细节</h2><ul>
-<li>通过”class-continuation分类”向类中新增实例变量</li>
-<li>如果某属性在主接口中声明为”只读”，而类的内部又要用设置方法修改时，那么就在”class-continuation分类”中将其拓展为”可读写”</li>
-<li>可以把私有方法的原形声明在”class-continuation分类”中</li>
-<li>若想使类所遵循的协议不为人知，则可于”class-continuation分类”中声明</li>
-</ul>
-<h2 id="第二十八条：通过协议提供匿名对象"><a href="#第二十八条：通过协议提供匿名对象" class="headerlink" title="第二十八条：通过协议提供匿名对象"></a>第二十八条：通过协议提供匿名对象</h2><ul>
-<li>协议可以再某种程度上提供匿名类型。具体的对象类型可以淡化成遵从某协议的id类型，协议里规定了对象所应实现的方法</li>
-<li>使用匿名对象来隐藏类型名称</li>
-<li>如果具体类型不重要，重要的是对象能够响应(定义在协议里的)特定方法，那么可使用匿名对象来表示</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/04/11/第四章-协议与分类/#more">more >></a>
+        
       
 
       
@@ -508,75 +547,9 @@ NSMutableArray * array2 = [[NSMutableArray alloc] initWithArray:array1 copyItems
 </code></pre>
 
 <p><font color="red">注意</font>:当只想使用LLDB控制台命令调试时(如:”po”命令)，我们应该复写debugDescription方法，该在NSObject类的默认实现中只是调用了description方法，但其只在LLDB调试时才调用。</p>
-<h2 id="第十八条：尽量使用不可变对象"><a href="#第十八条：尽量使用不可变对象" class="headerlink" title="第十八条：尽量使用不可变对象"></a>第十八条：尽量使用不可变对象</h2><ul>
-<li>尽量创建不可变对象</li>
-<li>若某属性仅可于对象内部修改，则在”class-continuation分类”中将其readonly属性拓展为readwrite属性</li>
-<li>不要在返回的对象上查询类型以确定其是否可变</li>
-</ul>
-<h2 id="第十九条：使用清晰而协调的命名方式"><a href="#第十九条：使用清晰而协调的命名方式" class="headerlink" title="第十九条：使用清晰而协调的命名方式"></a>第十九条：使用清晰而协调的命名方式</h2><p>命名时应遵循驼峰命名法，属性、方法首字母小写，类名除前缀首字母大写</p>
-<p>方法命名的注意事项：</p>
-<ul>
-<li>如果方法的返回值是新创建的，那么方法名的首个词应该是返回值的类型，除非前面还有修饰语(如localizedString)</li>
-<li>应该把表示参数类型的名词放在参数前面</li>
-<li>如果方法要在当前对象上执行操作，就应该包含动词;若执行操作时还需参数，则应在动词后加一个或多个名词</li>
-<li>不要用str这种简称，应该用string这种全称</li>
-<li>Boolean属性应加is前缀，如果某方法返回非属性的Boolean值，那么应该根据其功能，选用has或is当前前缀</li>
-<li>将get这个前缀留给那些借由”输出参数”来保存返回值的方法</li>
-</ul>
-<p>类与协议命名的注意事项：</p>
-<ul>
-<li>起名时应遵循标准Objective-C命名规范</li>
-<li>如果从其他框架继承子类，务必遵循其命名惯例，如:从UIView类中继承的话，类名结尾也应为View，同理，创建自定义委托时，其命名应包含委托发起方名称，后面再跟上Delegate一次</li>
-</ul>
-<h2 id="第二十条：为私有方法名加前缀"><a href="#第二十条：为私有方法名加前缀" class="headerlink" title="第二十条：为私有方法名加前缀"></a>第二十条：为私有方法名加前缀</h2><ul>
-<li>给私有方法的名称加上类前缀，这样可以很容易的将其与公共方法区分开，笔者推荐使用”p_”为私有方法前缀，也可使用类名前缀</li>
-<li>不要单独使用一个下划线做私有方法前缀，这种写法是预留给苹果公司的，你可能会无意中复写方法</li>
-</ul>
-<h2 id="第二十一条：理解Objective-C错误模型"><a href="#第二十一条：理解Objective-C错误模型" class="headerlink" title="第二十一条：理解Objective-C错误模型"></a>第二十一条：理解Objective-C错误模型</h2><ul>
-<li>只有发生了可使整个应用程序崩溃的严重错误时，才应使用异常</li>
-<li>在错误不那么严重的情况下，可以使用”委托方法”来处理错误，也可以把错误信息放在NSError对象中，经由”输出参数”返回给调用者</li>
-</ul>
-<h2 id="第二十二条：理解NSCopying协议"><a href="#第二十二条：理解NSCopying协议" class="headerlink" title="第二十二条：理解NSCopying协议"></a>第二十二条：理解NSCopying协议</h2><p>使用对象时经常需要拷贝它，若想让自己的类支持拷贝操作，就要实现NSCopying协议，该协议只有一个方法:</p>
-<pre><code>
--(id)copyWithZone:(NSZone *)zone;
-</code></pre>
-
-<ul>
-<li>简单实现NSCopying协议，首先遵守协议</li>
-</ul>
-<pre><code>
-@interface Car : NSObject < NSCopying >
-@property int speed;
-@property int lzNum;
-@end
-</code></pre>
-
-<ul>
-<li>实现copyWithZone方法</li>
-</ul>
-<pre><code>
-- (id)copyWithZone:(NSZone *)zone{
-    Car *c1 = [Car new];
-    c1.speed = _speed;
-    c1.lzNum = _lzNum; 
-    return c1;
-}
-</code></pre>
-
-<p>深浅拷贝问题：</p>
-<ul>
-<li>浅拷贝之后的内容与原始内容均指向相同对象.</li>
-<li>深拷贝之后的内容所指向的对象时原始内容中相关对象的一份拷贝</li>
-<li>在绝大多数情况下，执行的都是浅拷贝，如果需要在某对象上执行深拷贝，那么除非该类文档说它是用深拷贝来实现NSCoping协议的，某则，要么寻找能够执行深拷贝的方法，要么自己编写方法来做</li>
-</ul>
-<p><font color="red">总结</font>:</p>
-<ul>
-<li>若想要自己所写对象具有拷贝功能，则需实现NSCopying协议</li>
-<li>如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopying与NSmutableCopying协议</li>
-<li>复制对象时需决定采用浅拷贝还是深拷贝，一般情况下应尽量执行浅拷贝</li>
-<li>如果你所写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/04/10/第三章-接口与API设计/#more">more >></a>
+        
       
 
       
@@ -675,200 +648,9 @@ _name = [name copy];
 <li>调用copy方法系统底层会做很多处理，如判断是否需要分配新内存等</li>
 <li>一定不要用copy修饰可变类型，如NSMutableArray等，因为被copy修饰生成的是不可变类型，当调用可变方法时会崩溃</li>
 </ul>
-<h2 id="第七条：在对象内部尽量直接访问实例变量"><a href="#第七条：在对象内部尽量直接访问实例变量" class="headerlink" title="第七条：在对象内部尽量直接访问实例变量"></a>第七条：在对象内部尽量直接访问实例变量</h2><p>直接访问实例变量和使用self.调用属性的区别:</p>
-<ul>
-<li>由于不经过Objective-C的”方法派发”，所以直接访问实例变量速度更快，编译器所生成的代码会直接访问保存对象实例变量的那块内存</li>
-<li>直接访问实例变量时，不会调用其”设置方法”，会绕过”内存管理语义”(见第六条)，如在ARC下直接访问声明为copy的属性，并不会copy该属性，只会保留新值并释放旧值</li>
-<li>如果直接访问实例变量，不会触发”KVO”</li>
-<li>通过属性访问有助于排查错误，因为可以给”设置方法”打断点</li>
-</ul>
-<p>综上所述，折中的方案就是在写入实例变量时，通过其”设置方法”来做，在读取实例变量时，则直接访问。这样的话既能提高读取操作速度，又能控制对属性的写入操作，还能贯彻落实”内存管理语义”。但是需要<font color="red">注意</font>，在使用懒加载技术时，如果没调用”获取方法”而直接访问实例变量时会有问题。</p>
-<font size="3" color="red">总结:</font>
-
-<ul>
-<li>在对象内部读取数据时，应通过实例变量读取(懒加载除外)，而写入数据时则通过属性写入</li>
-<li>在初始化方法及dealloc方法中，为了避免子类复写了setter方法造成的异常，总应访问实例变量来读写数据</li>
-</ul>
-<h2 id="第八条：理解”对象等同性”"><a href="#第八条：理解”对象等同性”" class="headerlink" title="第八条：理解”对象等同性”"></a>第八条：理解”对象等同性”</h2><pre><code>
-NSString *foo = @"Badger 123";
-NSString *bar = [NSString stringWithFormat:@"Badger %i", 123];
-NSLog(@"%d", foo == bar);                   //0
-NSLog(@"%d", [foo isEqual:bar]);            //1
-NSLog(@"%d", [foo isEqualToString:bar]);    //1
-</code></pre>
-
-<ul>
-<li>从结果看，按照 == 操作符比较出来的结果未必是我们想要的，因为该操作比较的是两个指针本身，而不是所指的对象</li>
-<li>NSString类实现了一个自己独有的等同性判断方法，名为”isEqualToString”，该方法比调用”isEqual”快，因为后者不知道受测对象类型</li>
-</ul>
-<font size="3" color="red">总结:</font>
-
-<ul>
-<li>如需深入了解以下内容可以复习下《Effective Objective-C 20 编写高质量iOS与OS X代码的52个有效方法》这本书</li>
-<li>若想监测对象的等同性，请提供”isEqual:”与”hash”方法</li>
-<li>相同的对象必须具有相同的哈希码，但是哈希码相同的对象却未必相同</li>
-<li>如果自定义比较方法的话不要盲目监测每条属性，而是按照需求指定监测方案</li>
-<li>编写”hash”方法时，应使用计算速度快且哈希码碰撞几率低的算法</li>
-</ul>
-<h2 id="第九条：以”类族模式”隐藏实现细节"><a href="#第九条：以”类族模式”隐藏实现细节" class="headerlink" title="第九条：以”类族模式”隐藏实现细节"></a>第九条：以”类族模式”隐藏实现细节</h2><p>首先来想一下以下代码BOOL值会为什么？</p>
-<pre><code>
-NSArray * array = @[@1,@2];
-BOOL b = [array class] == [NSArray class];
-</code></pre>
-
-<p>其实是false，因为NSArray是一个类族，返回的值绝不可能是NSArray类本身。所以需要判断某个实例所属的类是否在类族中应使用”isKindOfClass”方法。</p>
-<p>下面介绍类似UIButton的工厂方法的实现</p>
-<ul>
-<li>抽象基类.h文件，首先定义子类类型</li>
-</ul>
-<pre><code>
-typedef NS_ENUM(NSUInteger,SLEmploeeType){
-    SLEmploeeTypeDeveloper,
-    SLEmploeeTypeDesigner,
-    SLEmploeeTypeFinance,
-};
-</code></pre>
-
-<ul>
-<li>定义属性与方法接口</li>
-</ul>
-<pre><code>
-@interface SLEmploee : NSObject
-@property ( nonatomic , copy ) NSString * name;
-+ (instancetype)emploeeWithType:(SLEmploeeType)type;
-- (void)doSomeWork;
-@end
-</code></pre>
-
-<ul>
-<li>抽象基类.m文件，自身不初始化，交由子类处理</li>
-</ul>
-<pre><code>
-+ (instancetype)emploeeWithType:(SLEmploeeType)type
-{
-    switch (type) {
-        case SLEmploeeTypeDeveloper :
-            return [[SLEmploeeDeveloper alloc] init];
-            break;
-        case SLEmploeeTypeDesigner :
-            return [[SLEmploeeDesigner alloc] init];
-            break;
-        case SLEmploeeTypeFinance :
-            return [[SLEmploeeFinance alloc] init];
-            break;
-    }
-}
--(void)doSomeWork{//子类实现}
-</code></pre>
-
-<ul>
-<li>此时外界调用，不同子类实现方式不同，而SLEmploee基类的doSomeWork并不做处理，所以也不应该让使用者直接用基类调用doSomeWork方法，最好在开发文档中写明</li>
-</ul>
-<pre><code>
-SLEmploee * one = [SLEmploee emploeeWithType:SLEmploeeTypeDesigner];
-[one doSomeWork];
-[one isMemberOfClass:[SLEmploee class]];  //NO，其实是子类的实例
-[one isKindOfClass:[SLEmploee class]];    //YES，实例位于类族中
-</code></pre>
-
-<font size="3" color="red">总结:</font>
-
-<ul>
-<li>类族模式可以把实现细节隐藏在一套简单的公共接口后面(系统框架中经常使用类族，如UIButton)</li>
-<li>从类族的公共抽象基类中继承子类时要当心，如有开发文档，则因先阅读开发文档</li>
-</ul>
-<h2 id="第十条：在既有类中使用关联对象存放自定义数据"><a href="#第十条：在既有类中使用关联对象存放自定义数据" class="headerlink" title="第十条：在既有类中使用关联对象存放自定义数据"></a>第十条：在既有类中使用关联对象存放自定义数据</h2><p>本条主要内容为”对象关联”，如需进阶请自行搜索</p>
-<ul>
-<li>设置关联objc_setAssociatedObject</li>
-<li>获取关联objc_getAssociatedObject</li>
-<li>可以通过”关联对象”机制来把两个对象链接起来</li>
-<li>定义关联对象时可指定”内存管理语义”，用以模仿定义属性时所采用的”拥有关系”和”非拥有关系”</li>
-<li>只有在其他做法不可行时才应选用”对相关联”，因为这种方法通常会引入难以查找的BUG</li>
-</ul>
-<h2 id="第十一条：理解objc-msgSend的作用"><a href="#第十一条：理解objc-msgSend的作用" class="headerlink" title="第十一条：理解objc_msgSend的作用"></a>第十一条：理解objc_msgSend的作用</h2><p>在对象上调用方法时Objective-C中的常用功能，用术语来说就叫做”消息传递”，消息有”名称”(name)或”选择器”(selector),可以接受参数，也有可能有返回值</p>
-<ul>
-<li>消息由接收者、选择器及参数构成，给某个对象”发送消息”(invoke a message)也饿就是相当于在该对象上”调用方法”(call a method)</li>
-<li>发送给某对象的全部消息都要由”动态消息派发系统”(dynamic message dispatch system)来处理，该系统工作原理为:</li>
-</ul>
-<pre><code>
-1.首先在接收者所属类中搜寻其"方法列表"(list of methods)，如果找到，跳转到实现代码，否则继续
-2.沿着继承体系继续向上查找，如果找到，跳转到实现代码，否则继续
-3.最终找不到相符方法的话，就执行"消息转发"(message forwarding)操作(第十二条)
-</code></pre>
-
-<ul>
-<li>看起来调用一个方法需要很多步骤，所幸的是objc_msgSend会将匹配结果缓存在”快速映射表”(fast map)中，每一个类都有这样一块缓存，若是稍后还向该类发送与选择器相同的消息，那么执行起来就会很快</li>
-</ul>
-<h2 id="第十一条：理解消息转发机制"><a href="#第十一条：理解消息转发机制" class="headerlink" title="第十一条：理解消息转发机制"></a>第十一条：理解消息转发机制</h2><p>如果对象收到无法解读的信息时，会调用所属类的下列类方法，此时可以进行动态方法解析</p>
-<ul>
-<li>首先调用下列方法，参数就是未知的选择器</li>
-</ul>
-<pre><code>
-+ (BOOL)resolveInstanceMethod:(SEL)sel
-</code></pre>
-
-<ul>
-<li>假设尚未实现的方法不是实例方法而是类方法，那么运行期间会调用下列方法</li>
-</ul>
-<pre><code>
-+(BOOL)resolveClassMethod:(SEL)sel
-</code></pre>
-
-<font size="3" color="red">要点:</font>
-
-<ul>
-<li>若对象无法响应某个选择器，则进入消息转发流程</li>
-<li>通过运行期的动态方法解析功能，我们就可以在需要用到某个方法时再将其加入类中</li>
-<li>对象可以把其无法解读的某些选择器转交给其他对象处理</li>
-<li>经过上述两步后，如果还没办法处理选择器，就启动完整的消息转发机制</li>
-<li><a href="https://www.jianshu.com/p/f9bd98ad5b05" target="_blank" rel="external">解读文章</a>(作者:SuperMario_Nil)</li>
-</ul>
-<h2 id="第十三条：用”方法交换”调试”黑盒方法”"><a href="#第十三条：用”方法交换”调试”黑盒方法”" class="headerlink" title="第十三条：用”方法交换”调试”黑盒方法”"></a>第十三条：用”方法交换”调试”黑盒方法”</h2><p>核心代码，通常实现在load方法中</p>
-<ul>
-<li>获取方法</li>
-</ul>
-<pre><code>
-Method imageNameMethod = class_getClassMethod([UIImage class], @selector(imageNamed:));
-Method my_imageNamedMethod = class_getClassMethod([UIImage class], @selector(my_imageNamed:));
-</code></pre>
-
-<ul>
-<li>交换方法</li>
-</ul>
-<pre><code>
-method_exchangeImplementations(imageNameMethod, my_imageNamedMethod);
-</code></pre>
-
-<ul>
-<li>在运行期间，可以向类中新增或替换选择器所对应的方法实现</li>
-<li>使用另一份实现来替换原有方法的实现称为”方法交换”，开发者常用此技术向原有功能中添加新功能</li>
-<li>使用”方法交换”可以给”完全不知道怎么实现的”的黑盒系统方法添加日志打印信息，有助于程序调试</li>
-<li>一般来说，只有调试程序时才需要在运行期修改方法实现，这种做法不宜滥用</li>
-</ul>
-<h2 id="第十四条：理解”类对象”的用意"><a href="#第十四条：理解”类对象”的用意" class="headerlink" title="第十四条：理解”类对象”的用意"></a>第十四条：理解”类对象”的用意</h2><pre><code>
-typedef struct objc_class * Class;
-struct objc_class {
-    Class isa;                // 当前类类型
-    Class super_class;        // 父类
-    const char *name;         // 类名
-    long version;             // 类的版本信息，默认为0
-    long info;                // 类信息，供运行期使用的一些位标识
-    long instance_size;       // 该类的实例变量大小
-    struct objc_ivar_list *ivars;               // 该类的成员变量链表
-    struct objc_method_list **methodLists;  // 方法定义的链表
-    struct objc_cache *cache;               // 方法缓存
-    struct objc_protocol_list *protocols;   // 协议链表
-#endif
-
-} OBJC2_UNAVAILABLE;
-</code></pre>
-
-<ul>
-<li>每个实例都有一个指向Class对象的指针(isa指针)，用以表明其类型，而这些Class对象则构成了类的集成体系</li>
-<li>如果对象类型无法再编译器确定，那么就应该使用类型信息查询方法来探知</li>
-<li>尽量使用类型信息查询方法确定对象类型，而不是直接比较对象，因为某些对象可能实现了消息转发功能</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/04/09/第二章-对象、消息、运行时/#more">more >></a>
+        
       
 
       
@@ -949,111 +731,9 @@ struct objc_class {
 <li>除非确有必要，否则不要在.h文件中引入其他类的头文件，应用<font color="red">@class</font>替代，在.m实现文件中在真正引入，这样做可以尽量降低类之间的耦合，也可以减少一定的编译时间</li>
 <li>有时候无法使用<font color="red">@class</font>向前声明，比如某个类要遵循一项协议，这个协议在另外一个类中声明的，可以将协议这部分单独放在一个头文件，或者放在分类当中，以降低引用成本。</li>
 </ul>
-<h2 id="第三条：多用字面量，少用与之等价的方法"><a href="#第三条：多用字面量，少用与之等价的方法" class="headerlink" title="第三条：多用字面量，少用与之等价的方法"></a>第三条：多用字面量，少用与之等价的方法</h2><p>传统创建NSNumber:</p>
-<pre><code>
-NSNumber * number = [NSNumber numberWithInt:1];
-</code></pre>
-
-<p>使用字面量创建NSNumber:</p>
-<pre><code>
-NSNumber * someNumber = @1;
-NSNumber * floatNumber = @1.23f;
-</code></pre>
-
-<p>传统创建数组与字典方式:</p>
-<pre><code>
-NSArray * array = [NSArray arrayWithObjects:@"cat",@"dog",@"mouse", nil];
-
-NSDictionary * dice = [NSDictionary dictionaryWithObjectsAndKeys:@"Matt",@"name",[NSNumber numberWithInt:18],@"age", nil];
-</code></pre>
-
-<p>使用字面量创建数组与字典方式:</p>
-<pre><code>
-NSArray * array1 = @[@"cat",@"dog",@"mouse"];
-
-NSDictionary * dict1 = @{
-                         @"Matt":@"name",
-                         @18:@"age",
-                         };
-</code></pre>
-
-<ul>
-<li>应使用字面量语法创建字符串、数值、数组、字典。与创建此类对象的常规方法相比，这样更简单明了</li>
-<li>应通过取下标操作来访问数组下标或字典中键所对应元素</li>
-<li>用字面量语法创建数组或字典时，若值中有nil，则会抛出异常，而是用常规方法创建时遇到nil则会不继续执行，相对程序员来说早发现异常是件好事</li>
-<li>注意：使用字面量创建的数组，字符串等等对象都是不可变的，如果想要可变的对象需要自己多执行一步mutableCopy，例如</li>
-</ul>
-<pre><code>
-NSMutableArray * mArray = @[@1,@2,@3] [mutableCopy];
-</code></pre>
-
-<h2 id="第四条：多用类型常量，少用-define预处理指令"><a href="#第四条：多用类型常量，少用-define预处理指令" class="headerlink" title="第四条：多用类型常量，少用#define预处理指令"></a>第四条：多用类型常量，少用#define预处理指令</h2><ul>
-<li><font color="red">const</font>(常量)与<font color="brown">#define</font>(宏)的区别</li>
-<li>编译时刻:宏:预编译 const:编译时刻</li>
-<li>编译检查:宏:不会检查错误 const:会检查错误</li>
-<li>宏的好处:可以定义代码</li>
-<li>宏的坏处:编译时间过长,因此常用的字符串通常使用const修饰</li>
-</ul>
-<font size="3">要点:</font>
-
-<ul>
-<li>不要用预处理指令定义常量，这样定义出来的常量不含类型信息。即使有人重新定义的常量值，编译器也不会产生警告信息，这将导致应用程序中的常量值不一致</li>
-<li>在.m文件中使用static const来定义，由于只在当前.m文件中可用，所以命名前缀应为k:</li>
-</ul>
-<pre><code>
-static NSString * const kConst = @"MyNameIsXXX";
-</code></pre>
-- 在.h文件中使用extern声明全局常量，并在.m文件中实现，通常使用与之相关的类名做前缀:
-
-<pre><code>
-//.h文件中
-extern CGFloat const MyAppMarin;
-</code></pre>
-<pre><code>
-//.m文件中
-CGFloat const MyAppMarin = 10;
-</code></pre>
-
-<h2 id="第五条：用枚举标识状态、选项、状态码"><a href="#第五条：用枚举标识状态、选项、状态码" class="headerlink" title="第五条：用枚举标识状态、选项、状态码"></a>第五条：用枚举标识状态、选项、状态码</h2><ul>
-<li>定义普通枚举推荐方式</li>
-</ul>
-<pre><code>
-typedef NS_ENUM(NSUInteger,SLBSTopicType) {
-    SLBSTopicTypeAll = 1,
-    SLBSTopicTypeVideo = 41,
-    SLBSTopicTypeVoice = 31,
-    SLBSTopicTypePicture = 10,
-    SLBSTopicTypeWord = 29
-};
-</code></pre>
-
-<ul>
-<li>定义选项卡枚举推荐方式</li>
-</ul>
-<pre><code>
-typedef NS_OPTIONS(NSUInteger, EOCPermittedDirection){
-    EOCPermittedDirectionUp    = 1 << 0,
-    EOCPermittedDirectionDown  = 1 << 1,
-    EOCPermittedDirectionLeft  = 1 << 2,
-    EOCPermittedDirectionRight = 1 << 3,
-};
-</code></pre>
-
-<font size="3">要点:</font>
-
-<ul>
-<li>应使用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起一个易懂的名字</li>
-<li>如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将其联合起来:</li>
-</ul>
-<pre><code>
-EOCPermittedDirectionUp | EOCPermittedDirectionDown;
-</code></pre>
-
-<ul>
-<li>用<font color="brown">NS_ENUM </font>和<font color="brown"> NS_OPTIONS </font>宏来定义枚举类型，并指明其底层数据类型，这样做可确保枚举是用开发者所选的底层数据类型实现的，而且这两个宏会自动判断编译方式。</li>
-<li>在处理枚举类型的switch语句中不要出现default分支，这样在加入新枚举值时，编译器就会提示开发者，switch语句并未处理所有的枚举值。</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/04/09/第一章-熟悉Objective-C/#more">more >></a>
+        
       
 
       
@@ -1344,92 +1024,6 @@ EOCPermittedDirectionUp | EOCPermittedDirectionDown;
 
 
   
-    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-查看分支：git branch
-创建分支：git branch 'name'
-切换分支：git checkout 'name'
-创建+切换分支：git checkout -b 'name'
-合并某分支到当前分支：git merge 'name'
-普通方式合并：git merge --no-ff -m "merge with no-ff" dev
-删除分支：git branch -d 'name'
-查看分支合并：git log --graph --pretty=oneline --abbrev-commit
-存储当前工作分支：git stash
-查看存储工作分支：git stash list
-恢复工作分支：git stash apply  或者  git stash pop
-恢复指定工作分支：git stash apply stash@{0}
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1531,11 +1125,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
             
             <div class="clearfix"></div>

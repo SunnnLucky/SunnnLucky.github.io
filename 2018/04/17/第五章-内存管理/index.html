@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/04/17/第五章-内存管理/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第二十九条：理解引用计数 引用计数机制通过可以递增递减的计数器来管理内存。对象创建好之后，其保留的计数至少为1。若保留计数为正，则对象继续存活。当保留计数为0时，则对象被销毁。 在对象的生命周期时，其与对象通过引用来保留或释放此对象。保留与释放操作分别会递增及递减保留计数  第三十条：以ARC简化引用计数 有ARC之后，程序员就无需担心内存管理问题了，使用ARC来编程，可省去类中居多”样板代码”">
-<meta property="og:updated_time" content="2018-04-17T15:24:38.455Z">
+<meta property="og:updated_time" content="2018-04-23T03:27:50.721Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第五章-内存管理">
 <meta name="twitter:description" content="第二十九条：理解引用计数 引用计数机制通过可以递增递减的计数器来管理内存。对象创建好之后，其保留的计数至少为1。若保留计数为正，则对象继续存活。当保留计数为0时，则对象被销毁。 在对象的生命周期时，其与对象通过引用来保留或释放此对象。保留与释放操作分别会递增及递减保留计数  第三十条：以ARC简化引用计数 有ARC之后，程序员就无需担心内存管理问题了，使用ARC来编程，可省去类中居多”样板代码”">
@@ -162,6 +162,7 @@
 <li>由方法所返回的对象，其内存管理语义总是通过方法名来体现，ARC将此确定为开发者必须遵守的规则(alloc，new，copy，mutableCopy)</li>
 <li>ARC只负责管理OC对象内存，尤其要注意：CoreFoundation对象不归ARC管理，开发者必须适时调用CFReatin/CFRelease</li>
 </ul>
+<a id="more"></a>
 <h2 id="第三十一条：在dealloc方法中只释放引用并解除监听"><a href="#第三十一条：在dealloc方法中只释放引用并解除监听" class="headerlink" title="第三十一条：在dealloc方法中只释放引用并解除监听"></a>第三十一条：在dealloc方法中只释放引用并解除监听</h2><ul>
 <li>在dealloc方法里，应该做的事情就是释放指向其他对象的引用，并取消原来订阅的”键值观测”(KVO)或NSNotificationCenter等通知，不要做其他事情</li>
 <li>如果对象持有文件描述符等系统资源，那么应该专门编写一个方法来释放此种资源。这样的类要和其他使用者约定:用完资源后必须调用close方法</li>
@@ -311,6 +312,15 @@ for (NSDictionary * record in databaseRecords) {
   
 <nav id="article-nav">
   
+    <a href="/2018/04/21/第六章-块与大中枢派发/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          第六章-块与大中枢派发
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/04/11/第四章-协议与分类/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">第四章-协议与分类</div>
@@ -443,11 +453,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
             
             <div class="clearfix"></div>

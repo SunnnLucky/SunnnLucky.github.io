@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/04/09/第一章-熟悉Objective-C/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第一条：了解Objective-C Objective-C为C语言添加了面向对象特性，是其的超集，Objective-C使用动态绑定的消息结构，也就是说，在运行时才会检查对象类型。接收一条消息后，究竟应执行何种代码，由运行期的环境而非编译器决定。 理解C语言的核心概念有助于写好Objective-C程序，尤其要掌握内存模型与指针  第二条：在类的头文件中应尽量少引入其他头文件 除非确有必要，否则不">
-<meta property="og:updated_time" content="2018-04-09T05:51:33.421Z">
+<meta property="og:updated_time" content="2018-04-23T03:26:25.870Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章 - 熟悉Objective-C">
 <meta name="twitter:description" content="第一条：了解Objective-C Objective-C为C语言添加了面向对象特性，是其的超集，Objective-C使用动态绑定的消息结构，也就是说，在运行时才会检查对象类型。接收一条消息后，究竟应执行何种代码，由运行期的环境而非编译器决定。 理解C语言的核心概念有助于写好Objective-C程序，尤其要掌握内存模型与指针  第二条：在类的头文件中应尽量少引入其他头文件 除非确有必要，否则不">
@@ -160,6 +160,7 @@
 <li>除非确有必要，否则不要在.h文件中引入其他类的头文件，应用<font color="red">@class</font>替代，在.m实现文件中在真正引入，这样做可以尽量降低类之间的耦合，也可以减少一定的编译时间</li>
 <li>有时候无法使用<font color="red">@class</font>向前声明，比如某个类要遵循一项协议，这个协议在另外一个类中声明的，可以将协议这部分单独放在一个头文件，或者放在分类当中，以降低引用成本。</li>
 </ul>
+<a id="more"></a> 
 <h2 id="第三条：多用字面量，少用与之等价的方法"><a href="#第三条：多用字面量，少用与之等价的方法" class="headerlink" title="第三条：多用字面量，少用与之等价的方法"></a>第三条：多用字面量，少用与之等价的方法</h2><p>传统创建NSNumber:</p>
 <pre><code>
 NSNumber * number = [NSNumber numberWithInt:1];
@@ -514,11 +515,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
             
             <div class="clearfix"></div>

@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/04/09/第二章-对象、消息、运行时/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第六条：理解“属性”这一概念 @property会自动生成set、get方法，和带下划线的实例变量，可使用@synthesize语法来指定实例变量名字，不过不推荐指定 内存管理语义，下面这一组特质仅会影响设置方法： assign : “设置方法”只会执行针对”纯量类型”的简单赋值操作，如:CGFloat、NSInteger等 strong : 定义了一种”拥有关系”，为这种属性设置新值时，设置方法">
-<meta property="og:updated_time" content="2018-04-09T14:09:51.527Z">
+<meta property="og:updated_time" content="2018-04-23T03:28:42.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第二章 - 对象、消息、运行时">
 <meta name="twitter:description" content="第六条：理解“属性”这一概念 @property会自动生成set、get方法，和带下划线的实例变量，可使用@synthesize语法来指定实例变量名字，不过不推荐指定 内存管理语义，下面这一组特质仅会影响设置方法： assign : “设置方法”只会执行针对”纯量类型”的简单赋值操作，如:CGFloat、NSInteger等 strong : 定义了一种”拥有关系”，为这种属性设置新值时，设置方法">
@@ -178,6 +178,7 @@ _name = [name copy];
 <li>调用copy方法系统底层会做很多处理，如判断是否需要分配新内存等</li>
 <li>一定不要用copy修饰可变类型，如NSMutableArray等，因为被copy修饰生成的是不可变类型，当调用可变方法时会崩溃</li>
 </ul>
+<a id="more"></a>
 <h2 id="第七条：在对象内部尽量直接访问实例变量"><a href="#第七条：在对象内部尽量直接访问实例变量" class="headerlink" title="第七条：在对象内部尽量直接访问实例变量"></a>第七条：在对象内部尽量直接访问实例变量</h2><p>直接访问实例变量和使用self.调用属性的区别:</p>
 <ul>
 <li>由于不经过Objective-C的”方法派发”，所以直接访问实例变量速度更快，编译器所生成的代码会直接访问保存对象实例变量的那块内存</li>
@@ -621,11 +622,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
             
             <div class="clearfix"></div>

@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/04/10/第三章-接口与API设计/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第十五条：用前缀避免命名空间冲突 选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀 若应用中引入的第三方库出现冲突时，可为其增加类前缀  第十六条：提供”指定初始化方法” 在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，">
-<meta property="og:updated_time" content="2018-04-10T13:04:28.759Z">
+<meta property="og:updated_time" content="2018-04-23T03:28:19.207Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章-接口与API设计">
 <meta name="twitter:description" content="第十五条：用前缀避免命名空间冲突 选择与你公司、应用程序或二者皆有关联的名称做类前缀，并在所有代码中使用这一前缀，但是要注意，苹果公司保留了所有”两字母前缀”的权利，所以开发者应选用三位或更多字母用作前缀 若应用中引入的第三方库出现冲突时，可为其增加类前缀  第十六条：提供”指定初始化方法” 在类中提供一个指定初始化方法，并于文档中指明，其他初始化方法均应调用此方法，假如用户调用超类的初始化方法，">
@@ -178,6 +178,7 @@
 </code></pre>
 
 <p><font color="red">注意</font>:当只想使用LLDB控制台命令调试时(如:”po”命令)，我们应该复写debugDescription方法，该在NSObject类的默认实现中只是调用了description方法，但其只在LLDB调试时才调用。</p>
+<a id="more"></a>
 <h2 id="第十八条：尽量使用不可变对象"><a href="#第十八条：尽量使用不可变对象" class="headerlink" title="第十八条：尽量使用不可变对象"></a>第十八条：尽量使用不可变对象</h2><ul>
 <li>尽量创建不可变对象</li>
 <li>若某属性仅可于对象内部修改，则在”class-continuation分类”中将其readonly属性拓展为readwrite属性</li>
@@ -496,11 +497,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
               </li>
             
             <div class="clearfix"></div>
