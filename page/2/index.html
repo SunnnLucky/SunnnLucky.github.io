@@ -129,40 +129,37 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-项目无法读取资源时的解决办法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
+      <a class="article-title" href="/2017/07/27/项目无法读取资源时的解决办法/">项目无法读取资源时的解决办法</a>
     </h1>
   
 
         
-        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+        <a href="/2017/07/27/项目无法读取资源时的解决办法/" class="archive-article-date">
+  	<time datetime="2017-07-27T14:32:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>
-查看分支：git branch
-创建分支：git branch 'name'
-切换分支：git checkout 'name'
-创建+切换分支：git checkout -b 'name'
-合并某分支到当前分支：git merge 'name'
-普通方式合并：git merge --no-ff -m "merge with no-ff" dev
-删除分支：git branch -d 'name'
-查看分支合并：git log --graph --pretty=oneline --abbrev-commit
-存储当前工作分支：git stash
-查看存储工作分支：git stash list
-恢复工作分支：git stash apply  或者  git stash pop
-恢复指定工作分支：git stash apply stash@{0}
-</code></pre>
+        <pre><code>SCNScene * scene = [SCNScene sceneNamed:@"Models.scnassets/name.scn"];</code></pre>
+
+<pre><code>UIImage * image = [UIImage imageNamed:@"imageName"];</code></pre>
+
+<p>当以上代码所指资源已在bundle中，但运行时却为空时:<br></p>
+<ul>
+<li>1.打开当前项目<code>Build Phases</code></li>
+<li>2.将所需资源目录加入<code>Copy Bundle Resources</code>中</li>
+<li>3.再次运行，查看scene或image是否为空</li>
+</ul>
+
       
 
       
@@ -175,7 +172,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
         		</li>
       		
 		</ul>
@@ -185,92 +182,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git标签操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git标签操作/">Git标签操作</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git标签操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-创建标签：git tag 'tagname'
-创建带有说明的标签：git tag -a v0.1 -m "version 0.1 released" 3628164
-创建PGP标签：git tag -s v0.2 -m "signed version 0.2 released" fec145a
-查看所有标签：git tag
-查找commit id：git log --pretty=oneline --abbrev-commit
-给对应的commit id打标签：git tag v0.9 6224937
-查看标签信息：git show 'tagname'
-删除标签：git tag -d v0.1
-推送指定标签到远程：git push origin 'tagname'
-推送所有标签到远程：git push origin --tags
-删除远程库标签（先从本地删除）：git push origin :refs/tags/v0.9
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/07/27/项目无法读取资源时的解决办法/">展开全文 >></a>
         </p>
       
 
@@ -392,40 +304,39 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
 
 
   
-    <article id="post-Button携带参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Git标签操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/20/Button携带参数/">Button携带参数</a>
+      <a class="article-title" href="/2017/07/22/Git标签操作/">Git标签操作</a>
     </h1>
   
 
         
-        <a href="/2017/07/20/Button携带参数/" class="archive-article-date">
-  	<time datetime="2017-07-20T04:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
+        <a href="/2017/07/22/Git标签操作/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>开发中经常会遇到执行Button的点击事件,需要传入一个参数,而苹果自带的方法只能传递Button本身<br><br>这个时候我们就要通过别的方法来变相的传递参数:<br><br>比如:自定义Button,给Button附加一个属性:</p>
-<pre><code>
-@interface SLButton : UIButton
-@property (nonatomic, strong) id info;
-@end
+        <pre><code>
+创建标签：git tag 'tagname'
+创建带有说明的标签：git tag -a v0.1 -m "version 0.1 released" 3628164
+创建PGP标签：git tag -s v0.2 -m "signed version 0.2 released" fec145a
+查看所有标签：git tag
+查找commit id：git log --pretty=oneline --abbrev-commit
+给对应的commit id打标签：git tag v0.9 6224937
+查看标签信息：git show 'tagname'
+删除标签：git tag -d v0.1
+推送指定标签到远程：git push origin 'tagname'
+推送所有标签到远程：git push origin --tags
+删除远程库标签（先从本地删除）：git push origin :refs/tags/v0.9
 </code></pre>
-
-
-<p>在初始化自定义Button的时候:</p>
-<pre><code>
-SLButton *button = [SLButton alloc] init];
-button.info = 要传的数据
-</code></pre>
-
       
 
       
@@ -438,7 +349,7 @@ button.info = 要传的数据
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
         		</li>
       		
 		</ul>
@@ -448,7 +359,93 @@ button.info = 要传的数据
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/20/Button携带参数/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>
+查看分支：git branch
+创建分支：git branch 'name'
+切换分支：git checkout 'name'
+创建+切换分支：git checkout -b 'name'
+合并某分支到当前分支：git merge 'name'
+普通方式合并：git merge --no-ff -m "merge with no-ff" dev
+删除分支：git branch -d 'name'
+查看分支合并：git log --graph --pretty=oneline --abbrev-commit
+存储当前工作分支：git stash
+查看存储工作分支：git stash list
+恢复工作分支：git stash apply  或者  git stash pop
+恢复指定工作分支：git stash apply stash@{0}
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
         </p>
       
 
@@ -649,19 +646,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">杂</a>
+                <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">杂</a>
               </li>
              
               <li class="article-tag-list-item">
