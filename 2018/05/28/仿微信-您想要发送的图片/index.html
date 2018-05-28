@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/05/28/仿微信-您想要发送的图片/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="项目中遇到仿微信 - 您想要发送的图片的需求，最初想到的实现方式是监听系统截图方法，然后根据截图时的时间戳与点击”+”号按钮时的时间戳做判断是否显示快捷发送View(以下简称快捷View)，但是这种实现思路只能拿到应用启动后的截图，与需求不服，故Pass。 最终实现思路:  首先通过PHAsset获取最近的系统相册中最近的图片 根据拿到图片的时间戳，与点击”+”后的时间戳判断快捷View是否显示">
-<meta property="og:updated_time" content="2018-05-28T07:26:45.441Z">
+<meta property="og:updated_time" content="2018-05-28T07:47:40.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="仿微信 - 您想要发送的图片">
 <meta name="twitter:description" content="项目中遇到仿微信 - 您想要发送的图片的需求，最初想到的实现方式是监听系统截图方法，然后根据截图时的时间戳与点击”+”号按钮时的时间戳做判断是否显示快捷发送View(以下简称快捷View)，但是这种实现思路只能拿到应用启动后的截图，与需求不服，故Pass。 最终实现思路:  首先通过PHAsset获取最近的系统相册中最近的图片 根据拿到图片的时间戳，与点击”+”后的时间戳判断快捷View是否显示">
@@ -162,7 +162,6 @@
 <a id="more"></a>
 <p>我这里将快捷View设计为一个单例，首先是.h文件的实现:</p>
 <pre><code>
-#import <uikit uikit.h="">
 
 @class PHAsset;
 
@@ -170,6 +169,7 @@ typedef void(^block)(UIImage *);
 
 @interface MLScreenShotView : UIView
 
+// 外界点击快捷展示View后拿到的图片
 @property ( nonatomic , copy ) block clickBlock;
 @property ( nonatomic , assign ) int lastTime;
 
@@ -192,7 +192,135 @@ typedef void(^block)(UIImage *);
 - (void)dismissView;
 
 @end
-</uikit></code></pre>
+</code></pre>
+
+<p>.m文件的实现，要导入Photos/Photos.h框架:</p>
+<pre><code>
+@interface MLScreenShotView()
+
+@property ( nonatomic , strong ) UIImageView * imageView;
+
+@end
+
+static int const margin = 5;
+
+@implementation MLScreenShotView
+
+#pragma mark - 单例
+static MLScreenShotView *_instance;
++ (instancetype)shardView{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[MLScreenShotView alloc] init];
+        _instance.frame = CGRectMake(0,0,80,120);
+        _instance.alpha = 0.1f;
+        _instance.layer.cornerRadius = 5;
+        _instance.clipsToBounds = YES;
+        _instance.backgroundColor = MLColor(249, 249, 249);
+
+        UITapGestureRecognizer *tapGestue = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidClick)];
+        [_instance addGestureRecognizer:tapGestue];
+
+        [self configSubView];
+    });
+    return _instance;
+}
+
++ (void)configSubView{
+    CGFloat imageWH = _instance.width - margin * 2;
+    UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(margin, _instance.height - margin - imageWH, imageWH, imageWH)];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.cornerRadius = 5;
+    imageView.clipsToBounds = YES;
+    _instance.imageView = imageView;
+    [_instance addSubview:imageView];
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(margin, margin, imageView.width, _instance.height - margin * 3 - imageWH)];
+    label.numberOfLines = 2;
+    label.text = @"您可能要发送的照片:";
+    label.font = [UIFont systemFontOfSize:12];
+    //label.backgroundColor = MLRandomColor;
+    [_instance addSubview:label];
+}
+
+#pragma mark -
+- (void)showView{
+    [UIView animateWithDuration:0.1f animations:^{
+        _instance.alpha = 1.0f;
+    }];
+}
+
+- (void)dismissView{
+    if ([_instance superview]){
+        [UIView animateWithDuration:0.1f animations:^{
+            _instance.alpha = 0.1f;
+        } completion:^(BOOL finished) {
+            [_instance removeFromSuperview];
+        }];
+    }
+}
+
+#pragma mark - 点击方法
++ (void)viewDidClick{
+    if (_instance.clickBlock) _instance.clickBlock(_instance.imageView.image);
+    [_instance dismissView];
+}
+
+#pragma mark - 设置图片
+-(void)setPHAsset:(PHAsset *)asset{
+    [[PHImageManager defaultManager] requestImageDataForAsset:asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        [self p_setScreenShotWithImageData:imageData];
+    }];
+}
+
+- (void)p_setScreenShotWithImageData:(NSData *)data{
+    UIImage * image = [[UIImage alloc] initWithData:data];
+    self.imageView.image = image;
+}
+
+@end
+</code></pre>
+
+<p>单例实现完成，我们需要在外界调用，这里我的设计是直接添加到”+”号按钮所在的View上，这样键盘弹出或者View高度改变时，快捷View都可以随着改变</p>
+<p>实现思路 - 可以添加在 “+”号按钮的点击方法</p>
+<pre><code>
+    // 取最近的系统照片
+    PHAsset * latestAsset = [PHAsset latestAsset];
+    int oldTime = [[NSNumber numberWithDouble:[latestAsset.creationDate timeIntervalSince1970]] intValue];
+    int newTime = [[NSDate getCurrentTimeStr] intValue];
+    int lastTime = [MLScreenShotView shardView].lastTime;
+    // 如果已经弹出过当前图片,就返回 - 测试时可以取消
+    if (lastTime == oldTime) return;
+    // 小于60秒
+    if ((newTime - oldTime) < 60) {
+        [[MLScreenShotView shardView] setPHAsset:latestAsset];
+        [MLScreenShotView shardView].lastTime = oldTime;//存储当前弹出的图片时间
+        CGFloat viewW = 80;
+        CGFloat viewH = 120;
+        CGFloat viewX = self.width - viewW - 10;
+        CGFloat viewY = -viewH - 10;
+        [MLScreenShotView shardView].frame = CGRectMake(viewX, viewY, viewW, viewH);
+        [self addSubview:[MLScreenShotView shardView]];
+        [[MLScreenShotView shardView] showView];
+    }else return;
+</code></pre>
+
+<p>这里需要注意的是如果快捷View添加到的父控件位置，超过父控件的大小，是不会响应事件的，我们需要再做处理</p>
+<pre><code>
+-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == nil) {
+        for (UIView *subView in self.subviews) {
+            CGPoint myPoint = [subView convertPoint:point fromView:self];
+            if (CGRectContainsPoint(subView.bounds, myPoint)) return subView;
+        }
+    }
+    return view;
+}
+</code></pre>
+
+<p>现在快捷View已经可以展示了，我们可以在”+”号按钮再次点击，或者任何想让快捷View消失的地方调用<code>[[MLScreenShotView shardView] dismissView];</code>去取消它</p>
+<p>最终的发送方法，就需要根据不同项目去做实现了，只需在需要发送Image的地方实现单例中的clickBlock()这个方法，从该block可以拿到当前快捷View所展示的图片。</p>
+
       
 
       
