@@ -129,6 +129,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-二进制转十进制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/31/二进制转十进制/">二进制转十进制</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/31/二进制转十进制/" class="archive-article-date">
+  	<time datetime="2017-07-31T13:45:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="按权相加法"><a href="#按权相加法" class="headerlink" title="按权相加法"></a>按权相加法</h2><p>例：将二进制数字 1101 转换为十进制</p>
+<p>计算过程：</p>
+<ul>
+<li>1.拆分二进制<pre><font color="black">(1)         (1)          (0)         (1)</font></pre></li>
+<li>2.从尾部依次增加2的幂<pre><font color="black">(2^3)       (2^2)        (2^1)       (2^0)</font></pre></li>
+<li>3.将第二步结果与原位相乘<pre><font color="black">(2^3 * 1) + (2^2 * 1) +  (2^1 * 0) + (2^0 * 1)</font></pre></li>
+<li>4.所得结果相加<br><pre><font color="black">(8)    +    (4)    +     (0)    +    (1)</font></pre><br>结果 = <code>13</code></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">通用概念</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/31/二进制转十进制/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-项目无法读取资源时的解决办法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -183,6 +264,92 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/07/27/项目无法读取资源时的解决办法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>
+查看分支：git branch
+创建分支：git branch 'name'
+切换分支：git checkout 'name'
+创建+切换分支：git checkout -b 'name'
+合并某分支到当前分支：git merge 'name'
+普通方式合并：git merge --no-ff -m "merge with no-ff" dev
+删除分支：git branch -d 'name'
+查看分支合并：git log --graph --pretty=oneline --abbrev-commit
+存储当前工作分支：git stash
+查看存储工作分支：git stash list
+恢复工作分支：git stash apply  或者  git stash pop
+恢复指定工作分支：git stash apply stash@{0}
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
         </p>
       
 
@@ -360,92 +527,6 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git分支操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git分支操作/">Git分支操作</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git分支操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-查看分支：git branch
-创建分支：git branch 'name'
-切换分支：git checkout 'name'
-创建+切换分支：git checkout -b 'name'
-合并某分支到当前分支：git merge 'name'
-普通方式合并：git merge --no-ff -m "merge with no-ff" dev
-删除分支：git branch -d 'name'
-查看分支合并：git log --graph --pretty=oneline --abbrev-commit
-存储当前工作分支：git stash
-查看存储工作分支：git stash list
-恢复工作分支：git stash apply  或者  git stash pop
-恢复指定工作分支：git stash apply stash@{0}
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git分支操作/">展开全文 >></a>
         </p>
       
 
@@ -654,15 +735,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">杂</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
             
             <div class="clearfix"></div>
