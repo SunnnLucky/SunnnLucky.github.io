@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/05/28/仿微信-您想要发送的图片/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="项目中遇到仿微信 - 您想要发送的图片的需求，最初想到的实现方式是监听系统截图方法，然后根据截图时的时间戳与点击”+”号按钮时的时间戳做判断是否显示快捷发送View(以下简称快捷View)，但是这种实现思路只能拿到应用启动后的截图，与需求不服，故Pass。 最终实现思路:  首先通过PHAsset获取最近的系统相册中最近的图片 根据拿到图片的时间戳，与点击”+”后的时间戳判断快捷View是否显示">
-<meta property="og:updated_time" content="2018-05-28T07:47:40.883Z">
+<meta property="og:updated_time" content="2018-05-28T09:14:42.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="仿微信 - 您想要发送的图片">
 <meta name="twitter:description" content="项目中遇到仿微信 - 您想要发送的图片的需求，最初想到的实现方式是监听系统截图方法，然后根据截图时的时间戳与点击”+”号按钮时的时间戳做判断是否显示快捷发送View(以下简称快捷View)，但是这种实现思路只能拿到应用启动后的截图，与需求不服，故Pass。 最终实现思路:  首先通过PHAsset获取最近的系统相册中最近的图片 根据拿到图片的时间戳，与点击”+”后的时间戳判断快捷View是否显示">
@@ -304,6 +304,18 @@ static MLScreenShotView *_instance;
     }else return;
 </code></pre>
 
+<p><code>[PHAsset latestAsset]</code>是一个PHAsset的分类方法，实现如下</p>
+<pre><code>
++ (PHAsset *)latestAsset {
+    // 获取所有资源的集合，并按资源的创建时间排序
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
+    return [assetsFetchResults firstObject];
+}
+</code></pre>
+
+
 <p>这里需要注意的是如果快捷View添加到的父控件位置，超过父控件的大小，是不会响应事件的，我们需要再做处理</p>
 <pre><code>
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
@@ -319,7 +331,7 @@ static MLScreenShotView *_instance;
 </code></pre>
 
 <p>现在快捷View已经可以展示了，我们可以在”+”号按钮再次点击，或者任何想让快捷View消失的地方调用<code>[[MLScreenShotView shardView] dismissView];</code>去取消它</p>
-<p>最终的发送方法，就需要根据不同项目去做实现了，只需在需要发送Image的地方实现单例中的clickBlock()这个方法，从该block可以拿到当前快捷View所展示的图片。</p>
+<p>最终的发送方法，就需要根据不同项目去做实现了，只需在需要发送Image的地方实现单例中的clickBlock()这个block，从该block可以拿到当前快捷View所展示的图片。</p>
 
       
 
