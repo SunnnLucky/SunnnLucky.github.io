@@ -129,6 +129,80 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-杂" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/06/杂/">杂</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/06/杂/" class="archive-article-date">
+  	<time datetime="2017-12-06T13:50:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="给自己一碗鸡汤"><a href="#给自己一碗鸡汤" class="headerlink" title="给自己一碗鸡汤"></a>给自己一碗鸡汤</h2><p>你想成为什么样的人，你就会成为什么样的人</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">杂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/06/杂/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-二进制转十进制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -379,6 +453,91 @@
 
 
   
+    <article id="post-Git标签操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/22/Git标签操作/">Git标签操作</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/22/Git标签操作/" class="archive-article-date">
+  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>
+创建标签：git tag 'tagname'
+创建带有说明的标签：git tag -a v0.1 -m "version 0.1 released" 3628164
+创建PGP标签：git tag -s v0.2 -m "signed version 0.2 released" fec145a
+查看所有标签：git tag
+查找commit id：git log --pretty=oneline --abbrev-commit
+给对应的commit id打标签：git tag v0.9 6224937
+查看标签信息：git show 'tagname'
+删除标签：git tag -d v0.1
+推送指定标签到远程：git push origin 'tagname'
+推送所有标签到远程：git push origin --tags
+删除远程库标签（先从本地删除）：git push origin :refs/tags/v0.9
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Git常用指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -442,91 +601,6 @@ git checkout -b branch-name origin/branch-name  从本地创建远程库对应�
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/07/22/Git常用指令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git标签操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/Git标签操作/">Git标签操作</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/Git标签操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>
-创建标签：git tag 'tagname'
-创建带有说明的标签：git tag -a v0.1 -m "version 0.1 released" 3628164
-创建PGP标签：git tag -s v0.2 -m "signed version 0.2 released" fec145a
-查看所有标签：git tag
-查找commit id：git log --pretty=oneline --abbrev-commit
-给对应的commit id打标签：git tag v0.9 6224937
-查看标签信息：git show 'tagname'
-删除标签：git tag -d v0.1
-推送指定标签到远程：git push origin 'tagname'
-推送所有标签到远程：git push origin --tags
-删除远程库标签（先从本地删除）：git push origin :refs/tags/v0.9
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/Git标签操作/">展开全文 >></a>
         </p>
       
 
@@ -731,6 +805,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Objective-C</a>
               </li>
              
@@ -739,11 +817,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">通用概念</a>
+                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">编写高质量OC的52个有效方法</a>
+                <a href="javascript:void(0)" class="js-tag color1">越狱/逆向</a>
               </li>
             
             <div class="clearfix"></div>

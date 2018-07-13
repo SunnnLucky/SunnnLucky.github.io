@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Git标签操作 | Hexo</title>
+  <title>恢复未越狱状态 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="创建标签：git tag &apos;tagname&apos; 创建带有说明的标签：git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164 创建PGP标签：git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a 查看所有标签：git tag 查找commit id：git log --pretty=oneline">
-<meta name="keywords" content="Git">
+  <meta name="description" content="注意,该步骤只适合使用Electra越狱的设备需要准备工具 unjailbreak.sh 脚本 PP助手  步骤 使用PP助手，通过 工具 - 设备工具 - 打开SSH通道 链接到手机 然后将unjailbreak.sh脚本先通过PP助手文件管理放入Books文件夹下 再通过以下指令复制到/electra目录下   cp -R /var/mobile/Media/Books/unjailbreak">
+<meta name="keywords" content="越狱&#x2F;逆向">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git标签操作">
-<meta property="og:url" content="http://yoursite.com/2017/07/22/Git标签操作/index.html">
+<meta property="og:title" content="恢复未越狱状态">
+<meta property="og:url" content="http://yoursite.com/2018/07/13/恢复未越狱状态/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="创建标签：git tag &apos;tagname&apos; 创建带有说明的标签：git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164 创建PGP标签：git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a 查看所有标签：git tag 查找commit id：git log --pretty=oneline">
-<meta property="og:updated_time" content="2017-12-06T14:07:07.773Z">
+<meta property="og:description" content="注意,该步骤只适合使用Electra越狱的设备需要准备工具 unjailbreak.sh 脚本 PP助手  步骤 使用PP助手，通过 工具 - 设备工具 - 打开SSH通道 链接到手机 然后将unjailbreak.sh脚本先通过PP助手文件管理放入Books文件夹下 再通过以下指令复制到/electra目录下   cp -R /var/mobile/Media/Books/unjailbreak">
+<meta property="og:updated_time" content="2018-07-13T01:14:17.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git标签操作">
-<meta name="twitter:description" content="创建标签：git tag &apos;tagname&apos; 创建带有说明的标签：git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164 创建PGP标签：git tag -s v0.2 -m &quot;signed version 0.2 released&quot; fec145a 查看所有标签：git tag 查找commit id：git log --pretty=oneline">
+<meta name="twitter:title" content="恢复未越狱状态">
+<meta name="twitter:description" content="注意,该步骤只适合使用Electra越狱的设备需要准备工具 unjailbreak.sh 脚本 PP助手  步骤 使用PP助手，通过 工具 - 设备工具 - 打开SSH通道 链接到手机 然后将unjailbreak.sh脚本先通过PP助手文件管理放入Books文件夹下 再通过以下指令复制到/electra目录下   cp -R /var/mobile/Media/Books/unjailbreak">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -132,39 +132,53 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Git标签操作" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-恢复未越狱状态" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Git标签操作
+      恢复未越狱状态
     </h1>
   
 
         
-        <a href="/2017/07/22/Git标签操作/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+        <a href="/2018/07/13/恢复未越狱状态/" class="archive-article-date">
+  	<time datetime="2018-07-13T01:03:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>
-创建标签：git tag 'tagname'
-创建带有说明的标签：git tag -a v0.1 -m "version 0.1 released" 3628164
-创建PGP标签：git tag -s v0.2 -m "signed version 0.2 released" fec145a
-查看所有标签：git tag
-查找commit id：git log --pretty=oneline --abbrev-commit
-给对应的commit id打标签：git tag v0.9 6224937
-查看标签信息：git show 'tagname'
-删除标签：git tag -d v0.1
-推送指定标签到远程：git push origin 'tagname'
-推送所有标签到远程：git push origin --tags
-删除远程库标签（先从本地删除）：git push origin :refs/tags/v0.9
+        <h2 id="注意-该步骤只适合使用Electra越狱的设备"><a href="#注意-该步骤只适合使用Electra越狱的设备" class="headerlink" title="注意,该步骤只适合使用Electra越狱的设备"></a>注意,该步骤只适合使用Electra越狱的设备</h2><h3 id="需要准备工具"><a href="#需要准备工具" class="headerlink" title="需要准备工具"></a>需要准备工具</h3><ul>
+<li>unjailbreak.sh 脚本</li>
+<li>PP助手</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ul>
+<li>使用PP助手，通过 工具 - 设备工具 - 打开SSH通道 链接到手机</li>
+<li>然后将unjailbreak.sh脚本先通过PP助手文件管理放入Books文件夹下</li>
+<li>再通过以下指令复制到/electra目录下</li>
+</ul>
+<pre><code>
+cp -R /var/mobile/Media/Books/unjailbreak.sh /electra/
 </code></pre>
+
+<ul>
+<li>进入electra目录，执行脚本</li>
+</ul>
+<pre><code>
+cd ..
+cd ..
+cd electra
+sh unjailbreak.sh
+</code></pre>
+
+<ul>
+<li>等待脚本执行，恢复未越狱状态</li>
+</ul>
+
       
 
       
@@ -203,7 +217,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">越狱/逆向</a>
         		</li>
       		
 		</ul>
@@ -259,7 +273,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2017/07/22/Git标签操作/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/13/恢复未越狱状态/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -273,18 +287,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/22/Git分支操作/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Git分支操作
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/07/22/Git常用指令/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Git常用指令</div>
+    <a href="/2018/05/28/仿微信-您想要发送的图片/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">仿微信 - 您想要发送的图片</div>
       <i class="icon-circle-right"></i>
     </a>
   
